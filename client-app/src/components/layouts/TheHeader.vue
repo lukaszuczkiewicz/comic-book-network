@@ -15,12 +15,19 @@
           <animated-button link to="/comics">Browse</animated-button>
         </li>
         <li>
+          <animated-button link to="/search">Search</animated-button>
+        </li>
+        <li>
           <animated-button link to="/auth">Logout</animated-button>
         </li>
         <!-- <li v-if="isLoggedIn">
           <base-button @click="logout">Logout</base-button>
         </li> -->
-        <animated-button></animated-button>
+        <n-avatar
+          round
+          size="large"
+          :src="require('../../assets/defaultAvatar.jpg')"
+        />
       </ul>
     </nav>
   </header>
@@ -28,10 +35,12 @@
 
 <script>
 import AnimatedButton from './AnimatedButton.vue';
+import { NAvatar } from 'naive-ui';
 
 export default {
   components: {
-    AnimatedButton
+    AnimatedButton,
+    NAvatar
   }
 }
 </script>
@@ -46,6 +55,7 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
+  box-shadow: 0px 4px 21px -6px rgba(66, 68, 90, 1);
 }
 
 header a {

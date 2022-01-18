@@ -18,7 +18,7 @@
           <animated-button link to="/search">Search</animated-button>
         </li>
         <li>
-          <animated-button link to="/auth">Logout</animated-button>
+          <animated-button @click="logout">Logout</animated-button>
         </li>
         <!-- <li v-if="isLoggedIn">
           <base-button @click="logout">Logout</base-button>
@@ -41,6 +41,12 @@ export default {
   components: {
     AnimatedButton,
     NAvatar
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch('logout');
+      this.$router.replace('/auth');
+    }
   }
 }
 </script>

@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 import Auth from '../components/pages/auth/Auth.vue';
 import Dashboard from '../components/pages/dashboard/Dashboard.vue';
-// import Main from '../components/pages/dashboard/Main.vue';
 import Profile from '../components/pages/profile/Profile.vue';
 import Rated from '../components/pages/profile/Rated.vue';
 import Collection from '../components/pages/profile/Collection.vue';
@@ -11,13 +10,13 @@ import ReadList from '../components/pages/profile/ReadList.vue';
 import Comics from '../components/pages/comics/Comics.vue';
 import Search from '../components/pages/search/Search.vue';
 import NotFound from '../components/pages/NotFound.vue';
-
-import store from '../store/index.js';
+// import store from '../store/index.js';
 
 const routes = [
   {
     path: '/auth',
     component: Auth,
+    meta: { requiresUnauth: true }
   },
   {
     path: '/',
@@ -62,15 +61,14 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, _, next) => {
-  // if (to.meta.requiresAuth && !store.getters.isAuthenticated) {
-  if (!store.getters.isAuthenticated) {
-    next('/auth');
-  } else if (to.meta.requiresUnauth && store.getters.isAuthenticated) {
-    next('/dashboard');
-  } else {
-    next();
-  }
-});
+// router.beforeEach(function(to, _, next) {
+//   if (to.meta.requiresAuth && !store.getters.isAuthenticated) {
+//     next('/auth');
+//   // } else if (to.meta.requiresUnauth && store.getters.isAuthenticated) {
+//   //   next('/dashboard');
+//   } else {
+//     next();
+//   }
+// });
 
 export default router;

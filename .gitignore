@@ -457,3 +457,4 @@ $RECYCLE.BIN/
 appsettings.json
 API/obj
 ssl/
+vue.config.js

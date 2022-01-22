@@ -1,5 +1,5 @@
 <template>
-  <the-header></the-header>
+  <the-header v-if="$route.path!='/auth'"></the-header>
   <router-view/>
 </template>
 

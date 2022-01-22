@@ -4,32 +4,24 @@
       <n-input
         type="text"
         placeholder=""
-        maxlength="40"
+        maxlength="20"
         v-model:value="username"
       />
     </n-form-item-row>
     <n-form-item-row label="Password">
-      <!-- <n-input
-        placeholder="Enter Password"
-        maxlength="40"
-        v-model.trim="password"
-      /> -->
       <n-input
         type="password"
-        maxlength="40"
+        maxlength="20"
         placeholder=""
         v-model:value="password"
       />
     </n-form-item-row>
     <div v-if="error" class="error">{{error}}</div>
-    <!-- <n-button type="primary" block @click="login">Sign In</n-button> -->
-    <n-button type="primary" @click="login" block :disabled="shouldLoginBtnBeDisabled">
+    <n-button type="primary" attr-type="submit" block :disabled="shouldLoginBtnBeDisabled">
       <span v-if="!isLoading">Sign In</span>
       <loading-spinner v-else></loading-spinner>
     </n-button>
   </n-form>
-  <!-- <div v-else class="spinner-background">
-  </div> -->
 </template>
 
 
@@ -45,7 +37,6 @@ export default {
     return {
       username: '',
       password: '',
-      formIsValid: true,
       isLoading: false,
       error: ""
     }    
@@ -55,17 +46,9 @@ export default {
       return this.isLoading || this.username.length <= 0 || this.password.length <= 0;
     }
   },
-  watch: {
-    username() {
-      this.error = '';
-    },
-    password() {
-      this.error = '';
-    }
-  },
   methods: {
     async login() {
-      this.formIsValid = true;
+      this.error="";
       const usernameValue = this.username.trim();
       const passwordValue = this.password.trim();
 
@@ -81,9 +64,8 @@ export default {
 
         this.$router.replace('/dashboard');
       } catch (err) {
-        this.formIsValid = false;
         this.password = '';
-        this.error = 'Failed to authenticate. Login or password is not correct.'; 
+        this.error = 'Your username or password is incorrect.';
       }
 
       this.isLoading = false;
@@ -96,5 +78,6 @@ export default {
 .error {
   background: red;
   color: white;
+  margin-bottom: 1em;
 }
 </style>

@@ -3,20 +3,22 @@
     <n-form-item-row label="Username">
       <n-input
         placeholder=""
-        maxlength="40"
+        maxlength="20"
         v-model:value="username"
       />
     </n-form-item-row>
     <n-form-item-row label="Password">
       <n-input
-      placeholder=""
-        maxlength="40"
+        type="password"  
+        placeholder=""
+        maxlength="20"
         v-model:value="password1" />
     </n-form-item-row>
     <n-form-item-row label="Reenter Password">
       <n-input
-      placeholder=""
-        maxlength="40"
+        type="password"  
+        placeholder=""
+        maxlength="20"
         v-model:value="password2" />
     </n-form-item-row>
     <n-button type="primary" block @click="signup">Sign Up</n-button>

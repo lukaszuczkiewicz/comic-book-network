@@ -15,14 +15,15 @@
         v-model.trim="password"
       /> -->
       <n-input
-        type="text"
+        type="password"
         maxlength="40"
         placeholder=""
         v-model:value="password"
       />
     </n-form-item-row>
+    <div v-if="error" class="error">{{error}}</div>
     <!-- <n-button type="primary" block @click="login">Sign In</n-button> -->
-    <n-button type="primary" @click="login" block :disabled="isLoading">
+    <n-button type="primary" @click="login" block :disabled="shouldLoginBtnBeDisabled">
       <span v-if="!isLoading">Sign In</span>
       <loading-spinner v-else></loading-spinner>
     </n-button>
@@ -45,43 +46,44 @@ export default {
       username: '',
       password: '',
       formIsValid: true,
-      isLoading: false
+      isLoading: false,
+      error: ""
     }    
+  },
+  computed: {
+    shouldLoginBtnBeDisabled() {
+      return this.isLoading || this.username.length <= 0 || this.password.length <= 0;
+    }
+  },
+  watch: {
+    username() {
+      this.error = '';
+    },
+    password() {
+      this.error = '';
+    }
   },
   methods: {
     async login() {
-      // this.formIsValid = true;
-      // if (
-      //   this.email === '' ||
-      //   !this.email.includes('@') ||
-      //   this.password.length < 6
-      // ) {
-      //   this.formIsValid = false;
-      //   return;
-      // }
+      this.formIsValid = true;
+      const usernameValue = this.username.trim();
+      const passwordValue = this.password.trim();
 
       this.isLoading = true;
 
       const actionPayload = {
-        // email: this.email,
-        username: this.username.trim(),
-        password: this.password.trim(),
+        username: usernameValue,
+        password: passwordValue,
       };
 
       try {
-        // if (this.mode === 'login') {
-        //   await this.$store.dispatch('login', actionPayload);
-        // } else {
-        //   await this.$store.dispatch('signup', actionPayload);
-        // }
         await this.$store.dispatch('login', actionPayload);
-        // const redirectUrl = '/' + (this.$route.query.redirect || 'coaches');
+
         this.$router.replace('/dashboard');
-        console.log(actionPayload)
-
-
       } catch (err) {
-        this.error = err.message || 'Failed to authenticate, try later.';
+        this.formIsValid = false;
+        this.password = '';
+        this.error = 'Failed to authenticate. Login or password is not correct.'; 
       }
 
       this.isLoading = false;
@@ -89,3 +91,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.error {
+  background: red;
+  color: white;
+}
+</style>

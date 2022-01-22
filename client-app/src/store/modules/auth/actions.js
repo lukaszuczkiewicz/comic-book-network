@@ -22,8 +22,6 @@ export default {
       url =
         'https://localhost:5001/api/account/register';
     }
-console.log(payload.username);
-console.log(payload.password);
 
     const response = await fetch(url, {
       method: 'POST',
@@ -36,10 +34,10 @@ console.log(payload.password);
     });
 
     const responseData = await response.json();
-
+    
     if (!response.ok) {
       const error = new Error(
-        responseData.message || 'Failed to authenticate. Check your login data.'
+        responseData.title || 'Failed to authenticate. Check your login data.'
       );
       throw error;
     }

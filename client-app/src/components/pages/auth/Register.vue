@@ -57,6 +57,7 @@
           <loading-spinner v-else></loading-spinner>
         </button>
     </div>
+    <a target="_blank" rel="noopener noreferrer" href="https://github.com/" class="help">Go to help page</a>
   </form>
 </template>
 
@@ -125,5 +126,9 @@ export default {
 <style scoped>
 .sign-up-btn {
   width: 100%;
+}
+.help {
+  margin-top: 2em;
+  display: inline-block;
 }
 </style>

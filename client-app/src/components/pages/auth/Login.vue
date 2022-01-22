@@ -3,7 +3,7 @@
     <div v-if="isNavigatedFromRegistration" class="notification is-success">
       Successfully registered. You can now log in.
     </div>
-    <div v-if="error && !isLoading" class="notification is-danger">{{ error }}</div>
+    <div v-if="error && isLoading" class="notification is-danger">{{ error }}</div>
     <div class="field">
       <label class="label">Username</label>
       <div class="control">
@@ -41,6 +41,7 @@
         <loading-spinner v-else></loading-spinner>
       </button>
     </div>
+    <a target="_blank" rel="noopener noreferrer" href="https://github.com/" class="help">Go to help page</a>
   </form>
 </template>
 
@@ -105,5 +106,9 @@ export default {
 
 .sign-in-btn {
   width: 100%;
+}
+.help {
+  margin-top: 2em;
+  display: inline-block;
 }
 </style>

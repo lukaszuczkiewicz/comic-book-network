@@ -8,7 +8,7 @@
       </div>
       <div class="card-content">
 
-        <div class="tabs is-centered">
+        <div class="tabs is-toggle is-boxed is-fullwidth">
           <ul>
             <li @click="goToLoginTab" :class="isLoginMode ? 'is-active' : ''"><a>Log in</a></li>
             <li @click="goToRegisterTab" :class="!isLoginMode ? 'is-active' : ''"><a>Register</a></li>
@@ -16,9 +16,10 @@
         </div>
 
         <div class="content">
-          <login v-if="isLoginMode" :isNavigatedFromRegistration="wasRegistrationSuccessful"></login>
-          <register v-else @registered="registered"></register>
-          <a target="_blank" rel="noopener noreferrer" href="https://github.com/" class="help">Go to help page</a>
+          <transition name="route" mode="out-in">
+            <login v-if="isLoginMode" :isNavigatedFromRegistration="wasRegistrationSuccessful"></login>
+            <register v-else @registered="registered"></register>
+          </transition>
         </div>
       </div>
     </div>
@@ -77,8 +78,28 @@ export default {
     rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
 
-.help {
-  margin-top: 2em;
-  display: inline-block;
+/* transitions */
+.route-enter-from {
+  opacity: 0;
+  transform: translateY(-30px);
+}
+
+.route-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.route-enter-active {
+  transition: all 0.3s ease-out;
+}
+
+.route-leave-active {
+  transition: all 0.3s ease-in;
+}
+
+.route-enter-to,
+.route-leave-from {
+  opacity: 1;
+  transform: translateY(0);
 }
 </style>

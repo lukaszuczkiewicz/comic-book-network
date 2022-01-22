@@ -20,6 +20,7 @@ export default {
 }
 body {
   margin: 0;
+  background: #cce3e6;
 }
 a {
   text-decoration: none;

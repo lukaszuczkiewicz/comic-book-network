@@ -1,80 +1,129 @@
 <template>
-  <n-form>
-    <n-form-item-row label="Username">
-      <n-input
-        placeholder=""
-        maxlength="20"
-        v-model:value="username"
-      />
-    </n-form-item-row>
-    <n-form-item-row label="Password">
-      <n-input
-        type="password"  
-        placeholder=""
-        maxlength="20"
-        v-model:value="password1" />
-    </n-form-item-row>
-    <n-form-item-row label="Reenter Password">
-      <n-input
-        type="password"  
-        placeholder=""
-        maxlength="20"
-        v-model:value="password2" />
-    </n-form-item-row>
-    <n-button type="primary" block @click="signup">Sign Up</n-button>
-  </n-form>
+<form @submit.prevent="signup">
+    <div class="field">
+      <label class="label">Username</label>
+      <div class="control">
+        <input
+          :class="isUsernameLengthOk? '' :'is-danger'"
+          class="input"
+          type="text"
+          placeholder="Username"
+          maxlength="20"
+          v-model="username"
+        />
+        <p v-if="!isUsernameLengthOk" class="is-danger help">Username must be at least 6 characters long.</p>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Password</label>
+      <div class="control">
+        <input
+          :class="isPasswordLengthOk? '' :'is-danger'"
+          class="input"
+          type="password"
+          placeholder="Password"
+          maxlength="20"
+          v-model="password1"
+        />
+        <p v-if="!isPasswordLengthOk" class="is-danger help">Password must be at least 6 characters long.</p>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Repeat Password</label>
+      <div class="control">
+        <input
+          :class="isPasswordValid? '' :'is-danger'"
+          class="input"
+          type="password"
+          placeholder="Repeat Password"
+          maxlength="20"
+          v-model="password2"
+        />
+        <p v-if="!isPasswordValid" class="is-danger help">Passwords are not the same</p>
+      </div>
+    </div>
+
+    <div v-if="error" class="error">{{ error }}</div>
+
+    <div class="field is-grouped">
+        <button
+          type="submit"
+          class="button is-primary sign-up-btn"
+          :disabled="shouldRegisterBtnBeDisabled"
+        >
+          <span v-if="!isLoading">Register</span>
+          <loading-spinner v-else></loading-spinner>
+        </button>
+    </div>
+  </form>
 </template>
 
 <script>
+import LoadingSpinner from '../../ui/LoadingSpinner.vue';
 
 export default {
+  components: {
+    LoadingSpinner
+  },
+  emits: ['registered'],
   data() {
     return {
       username: '',
       password1: '',
       password2: '',
-      formIsValid: true,
+      isLoading: false,
+      error: ''
     };
+  },
+  computed: {
+    shouldRegisterBtnBeDisabled() {
+      return this.isLoading || this.username.length < 6 || this.password1.length < 6 || (this.password1 != this.password2);
+    },
+    isPasswordValid() {
+      return (this.password1.length===0 || this.password2.length===0) //don't show error message when user didn't enter anything
+        || (this.password1.length >= 6
+        && this.password2.length >= 6
+        && this.password1 === this.password2)
+    },
+    isPasswordLengthOk() {
+      return this.password1.length===0 || this.password1.length >= 6
+    },
+    isUsernameLengthOk() {
+      return this.username.length===0 || this.username.length >= 6
+    }
   },
   methods: {
     async signup() {
-      // this.formIsValid = true;
-      // if (
-      //   this.email === '' ||
-      //   !this.email.includes('@') ||
-      //   this.password.length < 6
-      // ) {
-      //   this.formIsValid = false;
-      //   return;
-      // }
+      const usernameValue = this.username;
+      const password1Value = this.password1;
+      const password2Value = this.password2;
 
-      // this.isLoading = true;
+      this.isLoading = true;
 
-      if (this.password1.trim() != this.password2.trim()) return;
+      if (password1Value != password2Value) return;
 
       const actionPayload = {
-        username: this.username.trim(),
-        password: this.password1.trim(),
+        username: usernameValue,
+        password: password1Value
       };
 
       try {
-        // if (this.mode === 'login') {
-        //   await this.$store.dispatch('login', actionPayload);
-        // } else {
-        //   await this.$store.dispatch('signup', actionPayload);
-        // }
         await this.$store.dispatch('signup', actionPayload);
-        // const redirectUrl = '/' + (this.$route.query.redirect || 'coaches');
-        this.$router.replace('/dashboard');
-        console.log(actionPayload)
-
-
+        this.$emit('registered');
       } catch (err) {
-        this.error = err.message || 'Failed to authenticate, try later.';
+        'Username already exists';
       }
 
-      // this.isLoading = false;
-    },
+      this.isLoading = false;
+    }
   },
 };
 </script>
+
+<style scoped>
+.sign-up-btn {
+  width: 100%;
+}
+</style>

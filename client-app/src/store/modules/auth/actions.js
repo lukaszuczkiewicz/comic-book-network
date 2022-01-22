@@ -37,7 +37,7 @@ export default {
     
     if (!response.ok) {
       const error = new Error(
-        responseData.title || 'Failed to authenticate. Check your login data.'
+        responseData.title || 'Failed to authenticate.'
       );
       throw error;
     }

@@ -1,5 +1,9 @@
 <template>
   <form @submit.prevent="login">
+    <div v-if="isNavigatedFromRegistration" class="notification is-success">
+      Successfully registered. You can now log in.
+    </div>
+    <div v-if="error && !isLoading" class="notification is-danger">{{ error }}</div>
     <div class="field">
       <label class="label">Username</label>
       <div class="control">
@@ -26,57 +30,16 @@
       </div>
     </div>
 
-    <!-- <div class="field">
-    <label class="label">Password</label>
-    <div class="control has-icons-left has-icons-right">
-      <input
-        class="input is-success"
-        type="text"
-        placeholder="Text input"
-        value="bulma"
-      />
-      <span class="icon is-small is-left">
-        <i class="fas fa-user"></i>
-      </span>
-      <span class="icon is-small is-right">
-        <i class="fas fa-check"></i>
-      </span>
-    </div>
-    <p class="help is-success">This username is available</p>
-  </div>
-
-  <div class="field">
-    <label class="label">Email</label>
-    <div class="control has-icons-left has-icons-right">
-      <input
-        class="input is-danger"
-        type="email"
-        placeholder="Email input"
-        value="hello@"
-      />
-      <span class="icon is-small is-left">
-        <i class="fas fa-envelope"></i>
-      </span>
-      <span class="icon is-small is-right">
-        <i class="fas fa-exclamation-triangle"></i>
-      </span>
-    </div>
-    <p class="help is-danger">This email is invalid</p>
-  </div> -->
-
-    <div v-if="error" class="error">{{ error }}</div>
 
     <div class="field is-grouped">
-      <!-- <div class="control"> -->
-        <button
-          type="submit"
-          class="button is-primary sign-in-btn"
-          :disabled="shouldLoginBtnBeDisabled"
-        >
-          <span v-if="!isLoading">Sign In</span>
-          <loading-spinner v-else></loading-spinner>
-        </button>
-      <!-- </div> -->
+      <button
+        type="submit"
+        class="button is-primary sign-in-btn"
+        :disabled="shouldLoginBtnBeDisabled"
+      >
+        <span v-if="!isLoading">Log In</span>
+        <loading-spinner v-else></loading-spinner>
+      </button>
     </div>
   </form>
 </template>
@@ -88,6 +51,7 @@ export default {
   components: {
     LoadingSpinner,
   },
+  props: ['isNavigatedFromRegistration'],
   data() {
     return {
       username: '',

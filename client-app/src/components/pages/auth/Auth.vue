@@ -10,15 +10,15 @@
 
         <div class="tabs is-centered">
           <ul>
-            <li @click="isLoginMode=true" :class="isLoginMode ? 'is-active' : ''"><a>Log in</a></li>
-            <li @click="isLoginMode=false" :class="!isLoginMode ? 'is-active' : ''"><a>Register</a></li>
+            <li @click="goToLoginTab" :class="isLoginMode ? 'is-active' : ''"><a>Log in</a></li>
+            <li @click="goToRegisterTab" :class="!isLoginMode ? 'is-active' : ''"><a>Register</a></li>
           </ul>
         </div>
 
         <div class="content">
-          <login v-if="isLoginMode"></login>
-          <register v-else></register>
-          <a target="_blank" rel="noopener noreferrer" href="https://github.com/">Go to help page</a>
+          <login v-if="isLoginMode" :isNavigatedFromRegistration="wasRegistrationSuccessful"></login>
+          <register v-else @registered="registered"></register>
+          <a target="_blank" rel="noopener noreferrer" href="https://github.com/" class="help">Go to help page</a>
         </div>
       </div>
     </div>
@@ -33,11 +33,25 @@ import Register from './Register.vue';
 export default {
   components: {
     Login,
-    Register,
+    Register
   },
   data() {
     return {
-      isLoginMode: true 
+      isLoginMode: true,
+      wasRegistrationSuccessful: false
+    }
+  },
+  methods: {
+    registered() {
+      this.isLoginMode = true;
+      this.wasRegistrationSuccessful = true;
+    },
+    goToRegisterTab() {
+      this.isLoginMode=false
+      this.wasRegistrationSuccessful = false;
+    },
+    goToLoginTab() {
+      this.isLoginMode=true
     }
   }
 };
@@ -57,8 +71,14 @@ export default {
   background-image: url('../../../assets/authBackground.jpg');
 }
 .auth-card {
-  min-width: 400px;
+  width: 500px;
+  height: 900px;
   box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
     rgba(0, 0, 0, 0.22) 0px 15px 12px;
+}
+
+.help {
+  margin-top: 2em;
+  display: inline-block;
 }
 </style>

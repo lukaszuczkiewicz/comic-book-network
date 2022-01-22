@@ -19,12 +19,8 @@
 </template>
 
 <script>
-import { NCard, NSpace } from 'naive-ui';
 
 export default {
-  components: {
-    NCard, NSpace
-  },
   data() {
     return {
       comics: [

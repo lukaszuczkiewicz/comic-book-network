@@ -35,12 +35,10 @@
 
 <script>
 import AnimatedButton from './AnimatedButton.vue';
-import { NAvatar } from 'naive-ui';
 
 export default {
   components: {
-    AnimatedButton,
-    NAvatar
+    AnimatedButton
   },
   methods: {
     logout() {

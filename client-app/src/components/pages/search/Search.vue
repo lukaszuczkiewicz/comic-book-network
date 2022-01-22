@@ -15,16 +15,8 @@
 </template>
 
 <script>
-import { NForm, NInput, NFormItemRow, NButton, NSelect } from 'naive-ui';
 
 export default {
-  components: {
-    NForm,
-    NInput,
-    NFormItemRow,
-    NButton,
-    NSelect,
-  },
   data() {
     return {
       enteredName: '',

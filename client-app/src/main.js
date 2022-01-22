@@ -3,6 +3,8 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 
+require('@/assets/main.scss');
+
 // icons:
 import IosStar from './assets/icons/IosStar.vue';
 import BookReader from './assets/icons/BookReader.vue';

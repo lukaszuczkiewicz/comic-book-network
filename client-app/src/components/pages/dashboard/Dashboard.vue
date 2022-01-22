@@ -22,13 +22,12 @@
 </template>
 
 <script>
-import { NCard, NSpace } from 'naive-ui';
 import NewComics from './NewComics.vue';
 import NewComments from './NewComments.vue';
 
 export default {
   components: {
-    NCard, NSpace, NewComics, NewComments
+    NewComics, NewComments
   },
   data() {
     return {

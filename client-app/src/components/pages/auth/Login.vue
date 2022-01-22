@@ -1,54 +1,111 @@
 <template>
-  <n-form @submit.prevent="login">
-    <n-form-item-row label="Username">
-      <n-input
+  <form @submit.prevent="login">
+    <div class="field">
+      <label class="label">Username</label>
+      <div class="control">
+        <input
+          class="input"
+          type="text"
+          placeholder="Username"
+          maxlength="20"
+          v-model="username"
+        />
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Password</label>
+      <div class="control">
+        <input
+          class="input"
+          type="password"
+          placeholder="Password"
+          maxlength="20"
+          v-model="password"
+        />
+      </div>
+    </div>
+
+    <!-- <div class="field">
+    <label class="label">Password</label>
+    <div class="control has-icons-left has-icons-right">
+      <input
+        class="input is-success"
         type="text"
-        placeholder=""
-        maxlength="20"
-        v-model:value="username"
+        placeholder="Text input"
+        value="bulma"
       />
-    </n-form-item-row>
-    <n-form-item-row label="Password">
-      <n-input
-        type="password"
-        maxlength="20"
-        placeholder=""
-        v-model:value="password"
+      <span class="icon is-small is-left">
+        <i class="fas fa-user"></i>
+      </span>
+      <span class="icon is-small is-right">
+        <i class="fas fa-check"></i>
+      </span>
+    </div>
+    <p class="help is-success">This username is available</p>
+  </div>
+
+  <div class="field">
+    <label class="label">Email</label>
+    <div class="control has-icons-left has-icons-right">
+      <input
+        class="input is-danger"
+        type="email"
+        placeholder="Email input"
+        value="hello@"
       />
-    </n-form-item-row>
-    <div v-if="error" class="error">{{error}}</div>
-    <n-button type="primary" attr-type="submit" block :disabled="shouldLoginBtnBeDisabled">
-      <span v-if="!isLoading">Sign In</span>
-      <loading-spinner v-else></loading-spinner>
-    </n-button>
-  </n-form>
+      <span class="icon is-small is-left">
+        <i class="fas fa-envelope"></i>
+      </span>
+      <span class="icon is-small is-right">
+        <i class="fas fa-exclamation-triangle"></i>
+      </span>
+    </div>
+    <p class="help is-danger">This email is invalid</p>
+  </div> -->
+
+    <div v-if="error" class="error">{{ error }}</div>
+
+    <div class="field is-grouped">
+      <!-- <div class="control"> -->
+        <button
+          type="submit"
+          class="button is-primary sign-in-btn"
+          :disabled="shouldLoginBtnBeDisabled"
+        >
+          <span v-if="!isLoading">Sign In</span>
+          <loading-spinner v-else></loading-spinner>
+        </button>
+      <!-- </div> -->
+    </div>
+  </form>
 </template>
 
-
 <script>
-import { NForm, NFormItemRow, NButton, NInput } from 'naive-ui';
 import LoadingSpinner from '../../ui/LoadingSpinner.vue';
 
 export default {
   components: {
-    NForm, NFormItemRow, NButton, NInput, LoadingSpinner
+    LoadingSpinner,
   },
   data() {
     return {
       username: '',
       password: '',
       isLoading: false,
-      error: ""
-    }    
+      error: '',
+    };
   },
   computed: {
     shouldLoginBtnBeDisabled() {
-      return this.isLoading || this.username.length <= 0 || this.password.length <= 0;
-    }
+      return (
+        this.isLoading || this.username.length <= 0 || this.password.length <= 0
+      );
+    },
   },
   methods: {
     async login() {
-      this.error="";
+      this.error = '';
       const usernameValue = this.username.trim();
       const passwordValue = this.password.trim();
 
@@ -69,9 +126,9 @@ export default {
       }
 
       this.isLoading = false;
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -79,5 +136,10 @@ export default {
   background: red;
   color: white;
   margin-bottom: 1em;
+  padding: 0.25em 1em;
+}
+
+.sign-in-btn {
+  width: 100%;
 }
 </style>

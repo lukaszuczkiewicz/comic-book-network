@@ -1,32 +1,46 @@
 <template>
   <div class="background">
-  <n-card class="card">
-    <template #cover>
-      <img src="../../../assets/logo.png" alt="Comic Book Network">
-    </template>
-    <n-tabs default-value="signin" size="large" justify-content="space-evenly">
-      <n-tab-pane name="signin" tab="Sign in">
-        <login></login>
-      </n-tab-pane>
-      <n-tab-pane name="signup" tab="Sign Up">
-        <register></register>
-      </n-tab-pane>
-    </n-tabs>
-    <p>Go to help page</p>
-  </n-card>
+    <div class="card auth-card">
+      <div class="card-image">
+        <figure class="image is-4by3">
+          <img src="../../../assets/logo.png" alt="Comic Book Network" />
+        </figure>
+      </div>
+      <div class="card-content">
+
+        <div class="tabs is-centered">
+          <ul>
+            <li @click="isLoginMode=true" :class="isLoginMode ? 'is-active' : ''"><a>Log in</a></li>
+            <li @click="isLoginMode=false" :class="!isLoginMode ? 'is-active' : ''"><a>Register</a></li>
+          </ul>
+        </div>
+
+        <div class="content">
+          <login v-if="isLoginMode"></login>
+          <register v-else></register>
+          <a target="_blank" rel="noopener noreferrer" href="https://github.com/">Go to help page</a>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 
 <script>
-import { NCard, NTabs, NTabPane } from 'naive-ui';
 import Login from './Login.vue';
 import Register from './Register.vue';
 
 export default {
   components: {
-    NCard, NTabs, NTabPane, Login, Register
+    Login,
+    Register,
+  },
+  data() {
+    return {
+      isLoginMode: true 
+    }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -42,8 +56,9 @@ export default {
   align-items: center;
   background-image: url('../../../assets/authBackground.jpg');
 }
-.card {
-  max-width: 500px;
-  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+.auth-card {
+  min-width: 400px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+    rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
 </style>

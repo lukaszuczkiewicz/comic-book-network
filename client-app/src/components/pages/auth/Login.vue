@@ -3,7 +3,7 @@
     <div v-if="isNavigatedFromRegistration" class="notification is-success">
       Successfully registered. You can now log in.
     </div>
-    <div v-if="error && isLoading" class="notification is-danger">{{ error }}</div>
+    <div v-if="error && !isLoading" class="notification is-danger">{{ error }}</div>
     <div class="field">
       <label class="label">Username</label>
       <div class="control">

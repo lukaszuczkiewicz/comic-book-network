@@ -1,23 +1,33 @@
 <template>
   <main class="main">
-  <section>
-    <n-space justify="center">
+    <section class="list-section">
       <router-link to="/profile/myid/collection" class="link">
-        <n-card :title="collected" size="small" class="card collected">Collected<collected-icon></collected-icon></n-card>
+        <div :title="collected" size="small" class="card collected">
+          <collected-icon class="comic-icon"></collected-icon>
+          <div class="counter">{{ collected }}</div>Collected
+        </div>
       </router-link>
       <router-link to="/profile/myid/read" class="link">
-        <n-card :title="read" size="small" class="card read">Read<read-icon></read-icon></n-card>
+        <div :title="read" size="small" class="card read">
+          <read-icon class="comic-icon"></read-icon>
+          <div class="counter">{{ read }}</div>Read
+        </div>
       </router-link>
       <router-link to="/profile/myid/rated" class="link">
-        <n-card :title="rated" size="small" class="card rated">Rated<rated-icon></rated-icon></n-card>
+        <div :title="rated" size="small" class="card rated">
+          <rated-icon class="comic-icon"></rated-icon>
+          <div class="counter">{{ rated }}</div>Rated
+        </div>
       </router-link>
       <router-link to="/profile/myid/wishlist" class="link">
-       <n-card :title="wishlist" size="small" class="card wishlist">WishList<wishlist-icon></wishlist-icon></n-card>
+        <div :title="wishlist" size="small" class="card wishlist">
+          <wishlist-icon class="comic-icon"></wishlist-icon>
+          <div class="counter">{{ wishlist }}</div>Wishlist
+        </div>
       </router-link>
-    </n-space>
-  </section>
-  <new-comics></new-comics>
-  <new-comments></new-comments>
+    </section>
+    <new-comics></new-comics>
+    <new-comments></new-comments>
   </main>
 </template>
 
@@ -27,27 +37,34 @@ import NewComments from './NewComments.vue';
 
 export default {
   components: {
-    NewComics, NewComments
+    NewComics,
+    NewComments,
   },
   data() {
     return {
-      collected: "0",
-      read: "0",
-      rated: "0",
-      wishlist: "0"
-    }
-  }
-}
+      collected: '0',
+      read: '0',
+      rated: '0',
+      wishlist: '0',
+    };
+  },
+};
 </script>
 
 <style scoped>
 .main {
   padding: 1rem;
 }
+.list-section {
+  display: flex;
+  justify-content: center;
+}
 .card {
   width: 100px;
   cursor: pointer;
   transition: all 0.5s ease-in;
+  padding: 1em;
+  margin: 0 0.5em
 }
 .collected {
   background-color: rgb(129, 210, 212);
@@ -63,5 +80,9 @@ export default {
 }
 .card:hover {
   transform: scale(1.02);
+}
+.counter {
+  font-weight: 900;
+  font-size: 2em;
 }
 </style>

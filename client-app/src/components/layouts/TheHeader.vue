@@ -36,11 +36,9 @@
 
         <div class="navbar-end">
           <div class="navbar-item has-dropdown is-hoverable">
-            <!-- <n-avatar
-              round
-              size="large"
-              :src="require('../../assets/defaultAvatar.jpg')"
-            /> -->
+            <div class="avatar-container">
+              <img :src="require('../../assets/defaultAvatar.jpg')" class="avatar" />
+            </div>
             <a class="navbar-link">Profile</a>
 
             <div class="navbar-dropdown">
@@ -70,4 +68,12 @@ export default {
 </script>
 
 <style scoped>
+.avatar-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.avatar {
+  border-radius: 100%;
+}
 </style>

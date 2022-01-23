@@ -1,8 +1,8 @@
 <template>
-  <section class="block">
+  <section>
     <h3 class="title is-3">New Comics</h3>
     
-    <div class="card-container">
+    <div class="comic-card-container">
       <comic-card
         v-for="comic in comics"
         :key="comic.id"
@@ -50,7 +50,7 @@ export default {
         },
         {
           id: 46434,
-          title: 'Something is Killing the Children #1',
+          title: 'Something is Killing the Children',
           cover: 'cover4.jpg',
           issueNumber: 15,
           publisher: 'BOOM! Studios',
@@ -62,14 +62,9 @@ export default {
 </script>
 
 <style scoped>
-.card-container {
+.comic-card-container {
   display: flex;
-
-}
-.comic {
-  width: 190px;
-}
-comic-card {
-  flex: 1;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 </style>

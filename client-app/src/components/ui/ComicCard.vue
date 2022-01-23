@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="comic-card">
     <router-link :to="'/comic/' + comicId" class="link">
     <img
       class="comic-img"
@@ -20,8 +20,10 @@
         </button>
       </div>
     </div>
-    <h6 class="title is-6">{{ title + ' #' + issueNumber }}</h6>
-    <p>{{ publisher }}</p>
+    <div class="text-container">
+      <p class="publisher">{{ publisher }}</p>
+      <h6 class="title is-6">{{ title + ' #' + issueNumber }}</h6>
+    </div>
   </div>
 </template>
 
@@ -60,7 +62,7 @@ export default {
       };
 
       try {
-        await this.$store.dispatch('comic/id', actionPayload);
+        await this.$store.dispatch('toggle-collected', actionPayload);
       } catch (err) {
         console.log(err);
       }
@@ -76,10 +78,11 @@ export default {
 </script>
 
 <style scoped>
-.container {
+.comic-card {
   background: white;
   max-width: 170px;
   height: 400px;
+  margin: 0 0.5em 1em 0.5em;
 }
 .btns-container {
   display: flex;
@@ -92,5 +95,12 @@ export default {
 }
 .comic-icon {
   width: 20px;
+}
+.text-container {
+  padding: 0 0.5em;
+  text-align: left;
+}
+.publisher {
+  font-size: 0.8em;
 }
 </style>

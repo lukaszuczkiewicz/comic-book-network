@@ -7,7 +7,7 @@
           {{ username }} <span class="date">{{ date }}</span>
         </p>
         <h4 class="title is-4">
-          {{ comicTitle }}
+          {{ comicTitle }} #{{issueNumber}}
         </h4>
       </div>
     </div>

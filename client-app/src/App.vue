@@ -21,6 +21,7 @@ export default {
 body {
   margin: 0;
   background: #cce3e6;
+  min-height: 100vh;
 }
 a {
   text-decoration: none;

@@ -2,7 +2,7 @@
   <div class="background">
     <div class="card auth-card">
       <div class="card-image">
-        <figure class="image is-4by3">
+        <figure class="image">
           <img src="../../../assets/logo.png" alt="Comic Book Network" />
         </figure>
       </div>
@@ -76,6 +76,9 @@ export default {
   height: 900px;
   box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
     rgba(0, 0, 0, 0.22) 0px 15px 12px;
+}
+.card-image {
+  background: rgb(244, 31, 95)
 }
 
 /* transitions */

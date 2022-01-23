@@ -1,47 +1,58 @@
 <template>
-  <section>
-    <h3>New Comics</h3>
-    <n-space justify="center">
-      <n-card
+  <section class="block">
+    <h3 class="title is-3">New Comics</h3>
+    
+    <div class="card-container">
+      <comic-card
         v-for="comic in comics"
-        :key="comic"
-        class="comic"
+        :key="comic.id"
+        :comicId="comic.id"
+        :coverTitle="comic.cover"
+        :coverAlt="'Comic Cover'"
         :title="comic.title"
-        embedded
-      >
-        <template #cover>
-          <img :src="require(`../../../assets/${comic.cover}`)" alt="Comic Cover" />
-        </template>
-        {{ comic.publisher }}
-      </n-card>
-    </n-space>
+        :publisher="comic.publisher"
+        :issueNumber="comic.issueNumber"
+      ></comic-card>
+    </div>
   </section>
 </template>
 
 <script>
+import ComicCard from '../../ui/ComicCard.vue';
 
 export default {
+  components: {
+    ComicCard
+  },
   data() {
     return {
       comics: [
         {
-          title: 'Department Of Truth #15',
+          id: 34561,
+          title: 'Department Of Truth',
           cover: 'cover1.jpg',
+          issueNumber: 15,
           publisher: 'Image Comics',
         },
         {
-          title: 'We Live #1',
+          id: 2456,
+          title: 'We Live',
           cover: 'cover2.jpg',
+          issueNumber: 1,
           publisher: 'Aftershock',
         },
         {
-          title: 'Basilisk #1',
+          id: 33456,
+          title: 'Basilisk',
           cover: 'cover3.jpg',
+          issueNumber: 1,
           publisher: 'BOOM! Studios',
         },
         {
+          id: 46434,
           title: 'Something is Killing the Children #1',
           cover: 'cover4.jpg',
+          issueNumber: 15,
           publisher: 'BOOM! Studios',
         },
       ],
@@ -51,7 +62,14 @@ export default {
 </script>
 
 <style scoped>
+.card-container {
+  display: flex;
+
+}
 .comic {
   width: 190px;
+}
+comic-card {
+  flex: 1;
 }
 </style>

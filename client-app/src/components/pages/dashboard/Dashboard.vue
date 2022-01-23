@@ -1,6 +1,6 @@
 <template>
   <main class="main">
-    <section class="list-section">
+    <section class="block list-section">
       <router-link to="/profile/myid/collection" class="link">
         <div :title="collected" size="small" class="card collected">
           <collected-icon class="comic-icon"></collected-icon>

@@ -28,5 +28,20 @@ namespace API.Data
 
             await context.SaveChangesAsync();
         }
+
+        public static async Task SeedComicSeries(DataContext context)
+        {
+            //return if there are already some comic series in db
+            if (await context.ComicSeries.AnyAsync()) return;
+
+            var comicSeriesData = await System.IO.File.ReadAllTextAsync("Data/ComicSeriesSeedData.json");
+            var comicSeries = JsonSerializer.Deserialize<List<ComicSeries>>(comicSeriesData);
+            foreach (var cs in comicSeries)
+            {
+                context.ComicSeries.Add(cs);
+            }
+
+            await context.SaveChangesAsync();
+        }
     }
 }

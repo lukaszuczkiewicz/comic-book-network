@@ -1,0 +1,39 @@
+[
+  {
+    "SeriesName": "Saga",
+    "Publisher": "ImageComics",
+    "Writer": "Brian K. Vaughan",
+    "Artist": "Fiona Staples",
+    "StartYear": 2012
+  },
+  {
+    "SeriesName": "Something is Killing the Children",
+    "Publisher": "BOOM! Studios",
+    "Writer": "James Tynion IV",
+    "Artist": "Werther Dell ‘Edera",
+    "StartYear": 2019
+  },
+  {
+    "SeriesName": "We Live",
+    "Publisher": "Aftershock Comics",
+    "Writer": "Roy Miranda",
+    "Artist": "Inaki Miranda",
+    "StartYear": 2020
+  },
+  {
+    "SeriesName": "The Walking Dead",
+    "Publisher": "Image Comics",
+    "Writer": "Robert Kirkman",
+    "Artist": "Tony Moore",
+    "StartYear": 2003,
+    "EndYear": 2020
+  },
+  {
+    "SeriesName": "Watchmen",
+    "Publisher": "DC Comics",
+    "Writer": "Alan Moore",
+    "Artist": "Dave Gibbonss",
+    "StartYear": 1986,
+    "EndYear": 1987
+  }
+]

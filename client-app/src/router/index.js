@@ -8,7 +8,7 @@ import Collection from '../components/pages/profile/Collection.vue';
 import WishList from '../components/pages/profile/WishList.vue';
 import ReadList from '../components/pages/profile/ReadList.vue';
 import Comics from '../components/pages/comics/Comics.vue';
-import Search from '../components/pages/search/Search.vue';
+// import Search from '../components/pages/search/Search.vue';
 import NotFound from '../components/pages/NotFound.vue';
 // import store from '../store/index.js';
 
@@ -23,7 +23,7 @@ const routes = [
     redirect: '/dashboard',
   },
   { path: '/dashboard', component: Dashboard },
-  { path: '/search', component: Search },
+  { path: '/search', component: Comics },
   {
     path: '/profile/:id',
     component: Profile,

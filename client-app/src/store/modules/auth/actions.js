@@ -43,11 +43,11 @@ export default {
     }
 
     // const expiresIn = +responseData.expiresIn * 1000;
-    const expiresIn = 15000;
+    const expiresIn = 1200000;
     const expirationDate = new Date().getTime() + expiresIn;
 
-    localStorage.setItem('token', responseData.idToken);
-    localStorage.setItem('userId', responseData.localId);
+    localStorage.setItem('token', responseData.token);
+    localStorage.setItem('username', responseData.username);
     localStorage.setItem('tokenExpiration', expirationDate);
 
     timer = setTimeout(function() {
@@ -61,7 +61,7 @@ export default {
   },
   tryLogin(context) {
     const token = localStorage.getItem('token');
-    const userId = localStorage.getItem('userId');
+    const userId = localStorage.getItem('username');
     const tokenExpiration = localStorage.getItem('tokenExpiration');
 
     const expiresIn = +tokenExpiration - new Date().getTime();
@@ -83,7 +83,7 @@ export default {
   },
   logout(context) {
     localStorage.removeItem('token');
-    localStorage.removeItem('userId');
+    localStorage.removeItem('username');
     localStorage.removeItem('tokenExpiration');
 
     clearTimeout(timer);

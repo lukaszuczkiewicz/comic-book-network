@@ -19,6 +19,14 @@ namespace API.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<ComicDto>>> GetLatestComics()
+        {
+            var latestComics = await _comicRepository.GetLatestComicsAsync();
+
+            return Ok(latestComics);
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<ComicDto>> GetComicDetail(int id)
         {

@@ -42,7 +42,7 @@
             <a class="navbar-link">Profile</a>
 
             <div class="navbar-dropdown">
-              <a class="navbar-item">Profile</a>
+              <router-link to="/profile" class="navbar-item">Profile</router-link>
               <a class="navbar-item">Settings</a>
               <a class="navbar-item">Help</a>
               <hr class="navbar-divider" />

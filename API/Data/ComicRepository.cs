@@ -25,6 +25,15 @@ namespace API.Data
                 .SingleOrDefaultAsync();
         }
 
+        public async Task<IEnumerable<ComicDto>> GetLatestComicsAsync()
+        {
+            return await _context.Comic
+                .OrderByDescending(c => c.Id)
+                .Take(10)
+                .ProjectTo<ComicDto>(_mapper.ConfigurationProvider)
+                .ToListAsync();
+        }
+
         public async Task<bool> SaveAllAsync()
         {
             return await _context.SaveChangesAsync() > 0;

@@ -7,6 +7,7 @@ namespace API.Interfaces
     {
         void Update(Comic comic);
         Task<bool> SaveAllAsync();
+        Task<IEnumerable<ComicDto>> GetLatestComicsAsync();
         Task<ComicDto> GetComicAsync(int id);
     }
 }

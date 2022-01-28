@@ -4,7 +4,58 @@
     "Publisher": "ImageComics",
     "Writer": "Brian K. Vaughan",
     "Artist": "Fiona Staples",
-    "StartYear": 2012
+    "StartYear": 2012,
+    "Comics": [
+      {
+        "IssueNumber": 1,
+        "Price": 2.99,
+        "PageCount": 44,
+        "Photo": "saga1.jpg",
+        "Description": "Y: THE LAST MAN writer BRIAN K. VAUGHAN returns to comics with red-hot artist FIONA STAPLES for an all-new ONGOING SERIES! Star Wars-style action collides with Game of Thrones-esque drama in this original sci-fi/fantasy epic for mature readers, as new parents Marko and Alana risk everything to raise their child amidst a never-ending galactic war. The adventure begins in a spectacular DOUBLE-SIZED FIRST ISSUE, with forty-four pages of story with no ads for the regular price of just $2.99!"
+      },
+      {
+        "IssueNumber": 7,
+        "Price": 2.99,
+        "PageCount": 32,
+        "Photo": "saga7.jpg",
+        "Description": "Brian K. Vaughan and Fiona Staples' smash-hit ongoing series returns! An all-new adventure begins, as new parents Marko and Alana make an unexpected discovery in the vast emptiness of outer space."
+      },
+      {
+        "IssueNumber": 14,
+        "Price": 2.99,
+        "PageCount": 32,
+        "Photo": "saga14.jpg",
+        "Description": "Gwendolyn and Slave Girl think about the future."
+      },
+      {
+        "IssueNumber": 18,
+        "Price": 2.99,
+        "PageCount": 32,
+        "Photo": "saga18.jpg",
+        "Description": "Our heroes' stay on Quietus reaches its inevitable conclusion."
+      },
+      {
+        "IssueNumber": 19,
+        "Price": 2.99,
+        "PageCount": 32,
+        "Photo": "saga19.jpg",
+        "Description": "Saga returns! New planet, new adversaries, and a very new direction, all from the same old Hugo Award-winning team."
+      },
+      {
+        "IssueNumber": 34,
+        "Price": 2.99,
+        "PageCount": 32,
+        "Photo": "saga34.jpg",
+        "Description": "New friends are silver..."
+      },
+      {
+        "IssueNumber": 48,
+        "Price": 2.99,
+        "PageCount": 32,
+        "Photo": "saga48.jpg",
+        "Description": "Ghüs and Squire have an adventure."
+      }
+    ]
   },
   {
     "SeriesName": "Something is Killing the Children",
@@ -18,7 +69,44 @@
     "Publisher": "Aftershock Comics",
     "Writer": "Roy Miranda",
     "Artist": "Inaki Miranda",
-    "StartYear": 2020
+    "StartYear": 2020,
+    "Comics": [
+      {
+        "IssueNumber": 1,
+        "Price": 4.99,
+        "PageCount": 32,
+        "Photo": "welive1.jpg",
+        "Description": "The year is 2084 and the world has changed. Wracked by calamities and crawling with monsters, the last remaining humans face a dangerous existence. And now, the Earth has been sent a message from the deepest reaches of space - a dark countdown to the extinction of all humanity. But there is hope! Five thousand children will be rescued by these mysterious message-senders. This is the journey of Hototo, one of the lucky five thousand - but only if his teenage sister, Tala, can safely deliver him to the nearest Beacon before time runs out. WE DIE is a world of violence and beauty, a unique tale of the apocalypse as told by Inaki Miranda (Catwoman, Batman Beyond) and Roy Miranda, that invites both dread and hope."
+      },
+      {
+        "IssueNumber": 2,
+        "Price": 3.99,
+        "PageCount": 32,
+        "Photo": "welive2.jpg",
+        "Description": "The encounter with the Bengal Ripper puts the group’s survival to the test. Their lives now rest on Simon’s shoulders, but in the Broken Lands every wrong step comes with a consequence. Tala and Hototo, now joined by their new friends, Humbo and Alice, find themselves dragged onto a new and unsafe path. Reaching the train to Mother Megalopolis Nine is becoming an uncertain milestone."
+      },
+      {
+        "IssueNumber": 3,
+        "Price": 3.99,
+        "PageCount": 32,
+        "Photo": "welive3.jpg",
+        "Description": "Luck has abandoned the group. Humbo and Alice have lost track of their newfound friends- Tala and Hototo. The siblings are being held prisoner and will soon discover that the world hides dark corners- where screams of help are no more than fallen spirits. Meanwhile- time runs out for Hototo; the shuttle train to Megalopolis Mother 9 is about to de-part."
+      },
+      {
+        "IssueNumber": 4,
+        "Price": 3.99,
+        "PageCount": 32,
+        "Photo": "welive4.jpg",
+        "Description": "Humbo's plan for escaping the Acceptists might not be enough for the group to make the train headed to Megalopolis Mother 9. This might be the end of the trip. The fragile fantasy world created by Tala for her little brother Hototo finally crumbles under the cruel weight of reality. Tears are the only language left between them. The long journey to the extraction point suddenly reveals the open wound."
+      },
+      {
+        "IssueNumber": 5,
+        "Price": 3.99,
+        "PageCount": 32,
+        "Photo": "welive5.jpg",
+        "Description": "Extinction day hits humanity like a thunder of death. The countdown to extraction hits zero. The beacons activate and destiny speaks. Nothing will be like before. Not for Hototo. Not for Tala. Not for anyone."
+      }
+    ]
   },
   {
     "SeriesName": "The Walking Dead",

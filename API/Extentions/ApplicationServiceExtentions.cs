@@ -13,6 +13,7 @@ namespace API.Extentions
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IComicSeriesRepository, ComicSeriesRepository>();
+            services.AddScoped<IComicRepository, ComicRepository>();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             services.AddDbContext<DataContext>(options =>
             {

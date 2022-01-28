@@ -28,7 +28,7 @@ namespace API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ComicSeriesDto>> GetComicSeriesById(int id)
+        public async Task<ActionResult<ComicSeriesDto>> GetComicSeriesDetail(int id)
         {
             return await _comicSeriesRepository.GetComicSeriesByIdAsync(id);
         }

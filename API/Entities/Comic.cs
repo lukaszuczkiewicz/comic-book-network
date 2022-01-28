@@ -6,6 +6,7 @@
         public DateOnly PublishDate { get; set; }
         public int IssueNumber { get; set; }
         public decimal Price { get; set; }
+        public int PageCount { get; set; }
         public string Photo { get; set; }
         public string Description { get; set; }
 

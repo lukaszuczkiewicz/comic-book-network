@@ -30,6 +30,13 @@ namespace API.Data
                 .ProjectTo<ComicSeriesDto>(_mapper.ConfigurationProvider)
                 .SingleOrDefaultAsync();
         }
+        public async Task<ComicDto> GetComicDetailsAsync(int seriesId, int id)
+        {
+            return await _context.Comic
+                .Where(x => x.Id == id && x.ComicSeriesId == seriesId)
+                .ProjectTo<ComicDto>(_mapper.ConfigurationProvider)
+                .SingleOrDefaultAsync();
+        }
 
         public async Task<bool> SaveAllAsync()
         {

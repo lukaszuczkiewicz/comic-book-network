@@ -1,11 +1,12 @@
 <template>
   <div class="main-container" v-if="!isLoading">
     <div class="info-header">
+      <router-link :to="'/comics/' + comic.comicSeriesId">{{ comic.seriesName }}</router-link>
       <p>
-        <span class="publisher">Publisher</span>
+        <span class="publisher">{{ comic.publisher }}</span>
         <span> - RELEASED {{ comic.publishDate }}</span>
       </p>
-      <h2 class="title is-2">Comic Book Title #{{ comic.issueNumber }}</h2>
+      <h2 class="title is-2">{{ comic.seriesName }} #{{ comic.issueNumber }}</h2>
     </div>
 
     <div class="action-container">
@@ -39,8 +40,8 @@
         <p class="description">{{ comic.description }}</p>
         <p><span class="bold">Cover Price: </span>${{ comic.price }}</p>
         <p><span class="bold">Page Count: </span>32</p>
-        <p><span class="bold">Writer: </span>Writer Name</p>
-        <p><span class="bold">Artist: </span>Artist Name</p>
+        <p><span class="bold">Writer: </span>{{ comic.writer }}</p>
+        <p><span class="bold">Artist: </span>{{ comic.artist }}</p>
       </div>
       <img
         class="comic-img"
@@ -93,11 +94,17 @@ export default {
 
         this.comic = {
           id: responseData.id,
-          issueNumber: responseData.issueNumber,
-          description: responseData.description,
-          price: responseData.price,
           publishDate: responseData.publishDate,
-          photo: responseData.photo
+          issueNumber: responseData.issueNumber,
+          price: responseData.price,
+          pageCount: responseData.pageCount,
+          photo: responseData.photo,
+          description: responseData.description,
+          comicSeriesId: responseData.comicSeriesId,
+          seriesName: responseData.seriesName,
+          publisher: responseData.publisher,
+          writer: responseData.writer,
+          artist: responseData.artist
         };
       } catch (error) {
         this.error = error.message || 'Something went wrong!';

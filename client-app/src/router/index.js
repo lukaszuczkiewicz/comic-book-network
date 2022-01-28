@@ -8,22 +8,22 @@ import Collection from '../components/pages/profile/Collection.vue';
 import WishList from '../components/pages/profile/WishList.vue';
 import ReadList from '../components/pages/profile/ReadList.vue';
 import Comics from '../components/pages/comics/Comics.vue';
-// import Search from '../components/pages/search/Search.vue';
+import SeriesDetail from '../components/pages/comics/SeriesDetail.vue';
+import ComicDetail from '../components/pages/comics/ComicDetail.vue';
 import NotFound from '../components/pages/NotFound.vue';
 // import store from '../store/index.js';
 
 const routes = [
   {
+    path: '/',
+    redirect: '/dashboard',
+  },
+  {
     path: '/auth',
     component: Auth,
     meta: { requiresUnauth: true }
   },
-  {
-    path: '/',
-    redirect: '/dashboard',
-  },
   { path: '/dashboard', component: Dashboard },
-  { path: '/search', component: Comics },
   {
     path: '/profile/:id',
     component: Profile,
@@ -35,15 +35,16 @@ const routes = [
     ],
   },
   {
-    path: '/comics/', //new comics
-    component: Comics,
-    children: [
-      {
-        path: 'series/:id',
-        component: NotFound,
-        children: [{ path: 'edit', component: NotFound }],
-      },
-    ],
+    path: '/comics',
+    component: Comics
+  },
+  {
+    path: '/comics/:id',
+    component: SeriesDetail
+  },
+  {
+    path: '/comics/:id/:id2',
+    component: ComicDetail
   },
   { path: '/:notFound(.*)', component: NotFound },
   // {

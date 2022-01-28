@@ -1,13 +1,17 @@
 <template>
-  <div>
-    <h2>Comic Series:</h2>
-    <ul>
+  <div class="comic-series-container">
+    <h2 class="title is-3">Comic Series:</h2>
+    <ul class="series-list">
       <li v-for="series of comicSeries" :key="series.id">
-        <span>{{ series.seriesName }}</span>
-        -<span>{{ series.publisher }}</span> -<span>{{
-          series.startYear == 0 ? 'N/A' : series.startYear
-        }}</span>
-        -<span>{{ series.endYear == 0 ? 'ongoing' : series.startYear }}</span>
+        <p class="subtitle is-5">
+          <router-link :to="'/comics/'+series.id">
+            <span>{{ series.seriesName }}</span>
+          </router-link>
+          <span>{{ series.publisher }}</span> -<span>{{
+            series.startYear == 0 ? 'N/A' : series.startYear
+          }}</span>
+          -<span>{{ series.endYear == 0 ? 'ongoing' : series.startYear }}</span>
+        </p>
       </li>
     </ul>
   </div>
@@ -59,3 +63,13 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.comic-series-container {
+  max-width: 900px;
+  margin: 2em auto 0 auto;
+}
+.series-list {
+  text-align: left;
+}
+</style>

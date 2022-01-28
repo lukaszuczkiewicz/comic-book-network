@@ -13,7 +13,7 @@
     </div>
     <div class="main-content">
       <img
-        :src="require(`../../../assets/${coverTitle}`)"
+        :src="require(`../../../assets/covers/${coverTitle}`)"
         alt="Comic Cover"
         class="comic-cover"
       />

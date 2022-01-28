@@ -20,7 +20,7 @@ export default {
 }
 body {
   margin: 0;
-  background: #cce3e6;
+  background: #f2f4f5;
   min-height: 100vh;
 }
 a {

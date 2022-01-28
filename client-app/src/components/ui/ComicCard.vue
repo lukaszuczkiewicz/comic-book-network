@@ -1,9 +1,9 @@
 <template>
   <div class="comic-card">
-    <router-link :to="'/comic/' + comicId" class="link">
+    <router-link :to="'/comics/1/' + comicId" class="link">
     <img
       class="comic-img"
-      :src="require(`../../assets/${coverTitle}`)"
+      :src="require(`../../assets/covers/${coverTitle}`)"
       :alt="coverAlt"
     />
     </router-link>

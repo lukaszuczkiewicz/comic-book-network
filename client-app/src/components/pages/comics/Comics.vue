@@ -3,15 +3,16 @@
     <h2 class="title is-3">Comic Series:</h2>
     <ul class="series-list">
       <li v-for="series of comicSeries" :key="series.id">
-        <p class="subtitle is-5">
+        <div class="subtitle is-5 comic-row">
           <router-link :to="'/comics/'+series.id">
             <span>{{ series.seriesName }}</span>
           </router-link>
-          <span>{{ series.publisher }}</span> -<span>{{
+          <div>
+          <span>{{ series.publisher }}</span><span> ({{
             series.startYear == 0 ? 'N/A' : series.startYear
-          }}</span>
-          -<span>{{ series.endYear == 0 ? 'ongoing' : series.startYear }}</span>
-        </p>
+          }} - {{ series.endYear == 0 ? 'ongoing' : series.startYear }})</span>
+          </div>
+        </div>
       </li>
     </ul>
   </div>
@@ -66,10 +67,15 @@ export default {
 
 <style scoped>
 .comic-series-container {
-  max-width: 900px;
-  margin: 2em auto 0 auto;
+  max-width: 700px;
+  margin: auto;
+  padding: 1em;
 }
 .series-list {
   text-align: left;
+}
+.comic-row {
+  display: flex;
+  justify-content: space-between;
 }
 </style>

@@ -1,11 +1,14 @@
 <template>
   <div v-if="!isLoading">
-    <div>
-      <h2 class="title">{{ series.seriesName }}</h2>
+
+    <div class="series-header">
+      <h2 class="title is-1">{{ series.seriesName }}</h2>
+      <div class="header-box">
+
       <p>Publisher: {{ series.publisher }}</p>
       <p>Published From: {{ series.startYear }}</p>
       <p>Published To: {{ series.endYear }}</p>
-      <p>{{ series.id }}</p>
+      </div>
     </div>
 
     <comic-grid title="All issues:">
@@ -46,8 +49,6 @@ export default {
     async loadSeries() {
       this.isLoading = true;
 
-      console.log('id from route: ' + this.$route.params.id);
-
       try {
         const response = await fetch(
           'https://localhost:5001/api/comicseries/' + this.$route.params.id,
@@ -83,3 +84,13 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.header-box {
+  background: white;
+  color: black;
+  padding: 1em;
+  border-radius: 6px;
+  margin-bottom: 2em;
+}
+</style>

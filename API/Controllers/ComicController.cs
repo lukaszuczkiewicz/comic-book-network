@@ -20,7 +20,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ComicDto>>> GetLatestComics()
+        public async Task<ActionResult<IEnumerable<ComicCardDto>>> GetLatestComics()
         {
             var latestComics = await _comicRepository.GetLatestComicsAsync();
 

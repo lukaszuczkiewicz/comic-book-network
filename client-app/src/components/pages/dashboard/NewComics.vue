@@ -5,7 +5,7 @@
       :key="comic.id"
       :comicId="comic.id"
       :coverTitle="comic.photo"
-      :coverAlt="'Comic Cover'"
+      :coverAlt="`Cover of '${comic.title} #${comic.issueNumber}`"
       :title="comic.title"
       :publisher="comic.publisher"
       :issueNumber="comic.issueNumber"
@@ -54,8 +54,8 @@ export default {
         for (const key in responseData) {
           const comic = {
             id: responseData[key].id,
-            title: "SeriesNameToDo",
-            publisher: "PublisherToDo",
+            title: responseData[key].seriesName,
+            publisher: responseData[key].publisher,
             issueNumber: responseData[key].issueNumber,
             photo: responseData[key].photo,
           };

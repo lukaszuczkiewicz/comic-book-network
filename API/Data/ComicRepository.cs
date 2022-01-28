@@ -25,12 +25,20 @@ namespace API.Data
                 .SingleOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<ComicDto>> GetLatestComicsAsync()
+        public async Task<IEnumerable<ComicCardDto>> GetLatestComicsAsync()
         {
             return await _context.Comic
-                .OrderByDescending(c => c.Id)
+                .Join(_context.ComicSeries, c => c.ComicSeriesId, s => s.Id, (c, s) => new { c, s })
+                .OrderByDescending(joined => joined.c.Id)
                 .Take(10)
-                .ProjectTo<ComicDto>(_mapper.ConfigurationProvider)
+                .Select(x=> new ComicCardDto
+                {
+                    Id= x.c.Id,
+                    SeriesName = x.s.SeriesName,
+                    Publisher = x.s.Publisher,
+                    IssueNumber = x.c.IssueNumber,
+                    Photo = x.c.Photo
+                })
                 .ToListAsync();
         }
 

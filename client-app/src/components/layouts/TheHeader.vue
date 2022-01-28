@@ -4,7 +4,7 @@
       <div class="navbar-brand">
         <router-link class="navbar-item" to="/">
           <img
-            src="../../assets/logo.png"
+            src="../../assets/logo_small.png"
             alt="Comic Book Network"
             class="logo"
           />
@@ -75,5 +75,8 @@ export default {
 }
 .avatar {
   border-radius: 100%;
+}
+.logo {
+  background: orange;
 }
 </style>

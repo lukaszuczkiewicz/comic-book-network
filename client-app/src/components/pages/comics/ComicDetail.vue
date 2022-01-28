@@ -134,6 +134,7 @@ export default {
   display: flex;
   justify-content: space-between;
   border-radius: 6px;
+  margin-top: 0.75em;
 }
 .button {
   color: black;

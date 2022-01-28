@@ -11,7 +11,8 @@
       </div>
     </div>
 
-    <comic-grid title="All issues:">
+    <p v-if="comics.length===0">There are no issues added for this series.</p>
+    <comic-grid v-else title="All issues:">
       <comic-card
         v-for="comic in comics"
         :key="comic.id"

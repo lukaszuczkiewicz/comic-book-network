@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import Comment from '../comics/Comment.vue';
+import Comment from '../../ui/Comment.vue';
 
 export default {
   components: {

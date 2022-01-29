@@ -43,8 +43,7 @@
 
             <div class="navbar-dropdown">
               <router-link to="/profile" class="navbar-item">Profile</router-link>
-              <a class="navbar-item">Settings</a>
-              <a class="navbar-item">Help</a>
+              <a target="_blank" rel="noopener noreferrer" href="https://github.com/" class="navbar-item">Help</a>
               <hr class="navbar-divider" />
               <a class="navbar-item" @click="logout">Logout </a>
             </div>

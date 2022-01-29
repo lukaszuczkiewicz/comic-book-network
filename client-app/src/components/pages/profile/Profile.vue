@@ -86,7 +86,7 @@ export default {
       this.isLoading = true;
 
       try {
-        const response = await fetch(
+        await fetch(
           'https://localhost:5001/api/users',
           {
             method: 'PUT',
@@ -100,14 +100,7 @@ export default {
             })
           }
         );
-        const responseData = await response.json();
-
-        if (!response.ok) {
-          const error = new Error(responseData.message || 'Failed to update!');
-          throw error;
-        }
-
-        console.log(responseData);
+        this.$toast.success('Saved successfully.');
 
       } catch (error) {
         this.error = error.message || 'Something went wrong!';

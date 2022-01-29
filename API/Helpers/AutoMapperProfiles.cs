@@ -17,6 +17,11 @@ namespace API.Helpers
 
             CreateMap<Comic, ComicDto>();
             CreateMap<ComicSeries, ComicDto>();
+
+
+
+
+            CreateMap<MemberUpdateDto, AppUser>();
         }
     }
 }

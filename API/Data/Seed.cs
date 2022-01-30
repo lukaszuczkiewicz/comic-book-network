@@ -10,7 +10,6 @@ namespace API.Data
     {
         public static async Task SeedUsers(DataContext context)
         {
-            //return if there are already some users in db
             if (await context.Users.AnyAsync()) return;
 
             var userData = await System.IO.File.ReadAllTextAsync("Data/UserSeedData.json");
@@ -20,7 +19,7 @@ namespace API.Data
                 using var hmac = new HMACSHA512();
 
                 user.UserName = user.UserName.ToLower();
-                user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes("paSSword"));
+                user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes("pAsSwOrD"));
                 user.PasswordSalt = hmac.Key;
 
                 context.Users.Add(user);

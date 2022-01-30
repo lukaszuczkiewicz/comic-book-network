@@ -40,8 +40,7 @@ namespace API.Controllers
         [HttpPut]
         public async Task<ActionResult> UpdateUser(MemberUpdateDto memberUpdateDto)
         {
-            //var username = User.GetUsername();
-            var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var username = User.GetUsername();
 
             var user = await _userRepository.GetUserByUsernameAsync(username);
 

@@ -3,7 +3,7 @@
     public class ComicComment
     {
         public int Id { get; set; }
-        public int TextContent { get; set; }
+        public string TextContent { get; set; }
         public DateTime Date { get; set; }
 
         public Comic Comic { get; set; }

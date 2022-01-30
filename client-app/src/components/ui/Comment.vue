@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="card comment">
     <div class="comment-header">
       <img :src="require('../../assets/defaultAvatar.jpg')" class="avatar" />
       <div>
@@ -13,6 +13,7 @@
     </div>
     <div class="main-content">
       <img
+        v-if="coverTitle"
         :src="require(`../../assets/covers/${coverTitle}`)"
         alt="Comic Cover"
         class="comic-cover"

@@ -27,6 +27,7 @@ namespace API.Data
         {
             return await _context.ComicSeries
                 .Where(x => x.Id == id)
+                .OrderBy(x => x.SeriesName)
                 .ProjectTo<ComicSeriesDto>(_mapper.ConfigurationProvider)
                 .SingleOrDefaultAsync();
         }

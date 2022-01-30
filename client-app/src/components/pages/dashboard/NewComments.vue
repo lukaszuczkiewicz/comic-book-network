@@ -13,7 +13,6 @@
         :description="comment.text"
         :issueNumber="comment.issueNumber"
         :username="comment.username"
-        class="card comment"
       >
       </comment>
     </div>

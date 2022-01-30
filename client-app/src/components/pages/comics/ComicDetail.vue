@@ -1,12 +1,16 @@
 <template>
   <div class="main-container" v-if="!isLoading">
     <div class="info-header">
-      <router-link :to="'/comics/' + comic.comicSeriesId">{{ comic.seriesName }}</router-link>
+      <router-link :to="'/comics/' + comic.comicSeriesId">{{
+        comic.seriesName
+      }}</router-link>
       <p>
         <span class="publisher">{{ comic.publisher }}</span>
         <span> - RELEASED {{ comic.publishDate }}</span>
       </p>
-      <h2 class="title is-2">{{ comic.seriesName }} #{{ comic.issueNumber }}</h2>
+      <h2 class="title is-2">
+        {{ comic.seriesName }} #{{ comic.issueNumber }}
+      </h2>
     </div>
 
     <div class="action-container">
@@ -45,24 +49,29 @@
       </div>
       <img
         class="comic-img"
-        :src="require(`../../../assets/covers/`+ comic.photo)"
+        :src="require(`../../../assets/covers/` + comic.photo)"
         alt="comic cover"
       />
     </div>
+
+    <comic-comments></comic-comments>
+
   </div>
 </template>
 
 <script>
 import StarOutlined from '../../../assets/icons/StarOutlined.vue';
+import ComicComments from '../comics/ComicComments.vue';
 
 export default {
   components: {
     StarOutlined,
+    ComicComments
   },
   data() {
     return {
       comic: null,
-      isLoading: true,
+      isLoading: true
     };
   },
   created() {
@@ -104,13 +113,14 @@ export default {
           seriesName: responseData.seriesName,
           publisher: responseData.publisher,
           writer: responseData.writer,
-          artist: responseData.artist
+          artist: responseData.artist,
         };
+
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }
       this.isLoading = false;
-    },
+    }
   },
 };
 </script>
@@ -161,5 +171,19 @@ export default {
 }
 .bold {
   font-weight: 700;
+}
+
+.comment-form {
+  margin: 4em auto 0 auto;
+  max-width: 500px;
+}
+
+.add-comment-btn-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.5em;
+}
+.add-comment-btn {
+  width: 150px;
 }
 </style>

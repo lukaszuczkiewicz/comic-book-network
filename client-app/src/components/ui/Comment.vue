@@ -1,26 +1,27 @@
 <template>
   <router-link :to="`/comics/${comicSeriesId}/${comicId}`">
     <div class="card comment">
-    <div class="comment-header">
-      <img :src="require('../../assets/defaultAvatar.jpg')" class="avatar" />
       <div>
-        <p>
-          {{ username }} <span class="date">{{ date }}</span>
-        </p>
-        <h4 class="title is-4">
-          {{ comicTitle }} #{{issueNumber}}
-        </h4>
+        <div class="comment-header">
+          <img
+            :src="require('../../assets/defaultAvatar.jpg')"
+            class="avatar"
+          />
+          <div>
+            <p>
+              {{ username }} <span class="date">{{ date }}</span>
+            </p>
+            <h4 class="title is-4">{{ comicTitle }} #{{ issueNumber }}</h4>
+          </div>
+        </div>
+        <p class="text-content">{{ description }}</p>
       </div>
-    </div>
-    <div class="main-content">
       <img
         v-if="coverTitle"
         :src="require(`../../assets/covers/${coverTitle}`)"
         alt="Comic Cover"
         class="comic-cover"
       />
-      <p class="text-content">{{ description }}</p>
-    </div>
     </div>
   </router-link>
 </template>
@@ -30,11 +31,11 @@ export default {
   props: {
     comicId: {
       required: true,
-      type: Number
+      type: Number,
     },
     comicSeriesId: {
       required: true,
-      type: Number
+      type: Number,
     },
     coverTitle: {
       required: true,
@@ -58,32 +59,27 @@ export default {
     },
     username: {
       required: true,
-      type: String
-    }
+      type: String,
+    },
   },
-}
+};
 </script>
 
 <style scoped>
 .comment {
-  max-width: 900px;
   margin-bottom: 1em;
   padding: 1em;
   text-align: left;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
 }
 .comment-header {
   display: flex;
   margin-bottom: 0.5em;
 }
-.main-content {
-  display: flex;
-}
 .comic-cover {
-  width: 120px;
-  align-self: start;
-}
-.text-content {
-  margin-left: 0.5em;
+  width: 100px;
 }
 .avatar {
   border-radius: 100%;

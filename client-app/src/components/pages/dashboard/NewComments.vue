@@ -2,7 +2,7 @@
   <section class="comment-container">
     <h3 class="title is-3">Latest comments</h3>
 
-    <div>
+    <div class="comments">
       <comment
         v-for="c in comments"
         :key="c.Id"
@@ -88,5 +88,10 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 600px;
+  margin: 2em auto 0 auto;
+}
+.comments {
+  width: 100%;
 }
 </style>

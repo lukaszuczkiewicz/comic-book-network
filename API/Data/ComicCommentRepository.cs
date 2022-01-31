@@ -35,6 +35,35 @@ namespace API.Data
                 .OrderByDescending(x => x.Date)
                 .ToListAsync();
         }
+        public async Task<IEnumerable<LatestCommentDto>> GetLatestCommentsAsync()
+        {
+            var result = from cc in _context.ComicComment
+                         join u in _context.Users on cc.AppUserId equals u.Id
+                         join c in _context.Comic on cc.ComicId equals c.Id
+                         join cs in _context.ComicSeries on c.ComicSeriesId equals cs.Id
+                         select new LatestCommentDto
+                         {
+                             //from ComicComment
+                             Id = cc.Id,
+                             TextContent = cc.TextContent,
+                             Date = cc.Date,
+                             AppUserId = cc.AppUserId,
+                             ComicId = cc.ComicId,
+                             //from AppUser
+                             UserName = u.UserName,
+                             //from Comic
+                             IssueNumber = c.IssueNumber,
+                             Photo = c.Photo,
+                             ComicSeriesId = c.ComicSeriesId,
+                             //from comic series
+                             SeriesName = cs.SeriesName
+                         };
+
+            return await result
+                .OrderByDescending(x => x.Date)
+                .Take(5)
+                .ToListAsync();
+        }
 
         public void AddComicComment(ComicComment comment)
         {

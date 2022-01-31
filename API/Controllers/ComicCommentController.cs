@@ -57,9 +57,17 @@ namespace API.Controllers
         [HttpGet("{comicId}")]
         public async Task<ActionResult> GetComicComments(int comicId)
         {
-            var latestComics = await _commentRepository.GetComicCommentsAsync(comicId);
+            var comments = await _commentRepository.GetComicCommentsAsync(comicId);
 
-            return Ok(latestComics);
+            return Ok(comments);
+        }
+
+        [HttpGet("latest")]
+        public async Task<ActionResult> GetLatestComments()
+        {
+            var comments = await _commentRepository.GetLatestCommentsAsync();
+
+            return Ok(comments);
         }
     }
 }

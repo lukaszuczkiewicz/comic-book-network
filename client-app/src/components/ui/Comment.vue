@@ -1,5 +1,6 @@
 <template>
-  <div class="card comment">
+  <router-link :to="`/comics/${comicSeriesId}/${comicId}`">
+    <div class="card comment">
     <div class="comment-header">
       <img :src="require('../../assets/defaultAvatar.jpg')" class="avatar" />
       <div>
@@ -20,7 +21,8 @@
       />
       <p class="text-content">{{ description }}</p>
     </div>
-  </div>
+    </div>
+  </router-link>
 </template>
 
 <script>
@@ -30,13 +32,17 @@ export default {
       required: true,
       type: Number
     },
+    comicSeriesId: {
+      required: true,
+      type: Number
+    },
     coverTitle: {
       required: true,
       type: String,
     },
     date: {
       required: true,
-      type: Date,
+      type: String,
     },
     comicTitle: {
       required: true,

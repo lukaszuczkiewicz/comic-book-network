@@ -7,6 +7,7 @@
         v-for="c in comments"
         :key="c.Id"
         :comicId="c.comicId"
+        :comicSeriesId="c.comicSeriesId"
         :coverTitle="c.photo"
         :date="this.getConvertedDate(c.date)"
         :comicTitle="c.seriesName"
@@ -76,7 +77,7 @@ export default {
       this.isLoading = false;
     },
     getConvertedDate(sourceDate) {
-      return new Date(sourceDate).toDateString();
+      return new Date(sourceDate).toLocaleDateString() + " " + new Date(sourceDate).toLocaleTimeString();
     },
   }
 };

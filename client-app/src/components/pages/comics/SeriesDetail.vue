@@ -66,8 +66,6 @@ export default {
           throw error;
         }
 
-        console.log(responseData);
-
         this.series = {
           id: responseData.id,
           seriesName: responseData.seriesName,

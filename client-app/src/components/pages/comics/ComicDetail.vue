@@ -81,8 +81,6 @@ export default {
     async loadComicDetail() {
       this.isLoading = true;
 
-      console.log('id from route: ' + this.$route.params.id);
-
       try {
         const response = await fetch(
           `https://localhost:5001/api/comic/${this.$route.params.id2}`,
@@ -98,8 +96,6 @@ export default {
           const error = new Error(responseData.message || 'Failed to fetch!');
           throw error;
         }
-
-        console.log(responseData);
 
         this.comic = {
           id: responseData.id,

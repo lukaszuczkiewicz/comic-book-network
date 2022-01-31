@@ -27,7 +27,7 @@
     <comic-comment
       v-for="c in comments"
       :key="c.id"
-      :date="c.date"
+      :date="this.getConvertedDate(c.date)"
       :description="c.textContent"
       :username="c.username"
     >
@@ -127,6 +127,9 @@ export default {
       await this.loadComments();
       this.isLoading = false;
       this.comment = '';
+    },
+    getConvertedDate(sourceDate) {
+      return new Date(sourceDate).toLocaleDateString() + " " + new Date(sourceDate).toLocaleTimeString();
     },
   },
 };

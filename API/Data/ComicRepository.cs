@@ -17,7 +17,14 @@ namespace API.Data
             _mapper = mapper;
         }
 
-        public async Task<ComicDetailDto> GetComicAsync(int id)
+        public async Task<Comic> GetComicAsync(int id)
+        {
+            return await _context.Comic
+                .Where(x => x.Id == id)
+                .SingleOrDefaultAsync();
+        }
+
+        public async Task<ComicDetailDto> GetComicDetailAsync(int id)
         {
             return await _context.Comic
                 .Join(_context.ComicSeries, c => c.ComicSeriesId, s => s.Id, (c, s) => new { c, s })

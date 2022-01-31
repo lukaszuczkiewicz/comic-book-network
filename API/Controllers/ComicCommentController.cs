@@ -26,26 +26,32 @@ namespace API.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost("{comicId}")]
-        public async Task<ActionResult> AddCommentToComic(int comicId)
+        [HttpPost]
+        public async Task<ActionResult> AddCommentToComic(ComicCommentToAddDto commentToAdd)
         {
-            //var userId = User.GetUserId();
-            var user = await _userRepository.GetUserByUsernameAsync(User.GetUsername());
+            var username = User.GetUsername();
+
+            var user = await _userRepository.GetUserByUsernameAsync(username);
+
             var userId = user.Id;
-            //var comic = await _commentRepository.GetComicWithComments(comicId);
 
-            //var commentToAdd = new ComicComment
-            //{
-            //    TextContent = "abc",
-            //    Date = DateTime.Now,
-            //    AppUserId = userId
-            //};
 
-            //comic.ComicComments.Add(commentToAdd);
+            var comic = await _comicRepository.GetComicAsync(commentToAdd.ComicId);
 
-            //if (await _commentRepository.SaveAllAsync()) return Ok();
+            if (comic == null) return BadRequest("Comic does not exist");
 
-            return BadRequest("Failed to add comment");
+            var newComment = new ComicComment
+            {
+                TextContent = commentToAdd.TextContent,
+                Date = DateTime.Now,
+                AppUserId = userId,
+                ComicId = commentToAdd.ComicId
+            };
+            _commentRepository.AddComicComment(newComment);
+
+            if (await _commentRepository.SaveAllAsync()) return Ok();
+
+            return BadRequest("Failed to add the comment");
         }
 
         [HttpGet("{comicId}")]

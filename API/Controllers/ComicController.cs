@@ -30,7 +30,7 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<ComicDetailDto>> GetComicDetail(int id)
         {
-            return await _comicRepository.GetComicAsync(id);
+            return await _comicRepository.GetComicDetailAsync(id);
         }
     }
 }

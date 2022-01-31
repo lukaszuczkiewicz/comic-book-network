@@ -49,8 +49,6 @@ export default {
           throw error;
         }
 
-        console.log(responseData);
-
         for (const key in responseData) {
           const comic = {
             id: responseData[key].id,

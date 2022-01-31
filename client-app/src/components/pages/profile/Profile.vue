@@ -64,8 +64,6 @@ export default {
           throw error;
         }
 
-        console.log(responseData);
-
         const m = {
           id: responseData.id,
           userName: responseData.userName,

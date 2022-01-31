@@ -1,6 +1,6 @@
 <template>
-  <section class="comments-container" v-if="!isLoading">
-    <form class="comment-form">
+  <section class="comments-container">
+    <form class="comment-form" @submit.prevent="addComment">
       <div>
         <label class="label">Comments</label>
         <div class="control">
@@ -9,14 +9,15 @@
             placeholder="Add your comment"
             maxlength="200"
             v-model="comment"
+            :disabled="isLoading"
           ></textarea>
         </div>
       </div>
       <div class="add-comment-btn-wrapper">
         <button
-          type="button"
+          type="submit"
+          :disabled="isLoading || comment.length===0"
           class="button is-dark add-comment-btn"
-          @click="addComment"
         >
           Add comment
         </button>
@@ -55,8 +56,6 @@ export default {
     async loadComments() {
       this.isLoading = true;
 
-      console.log('id from ComicComments route: ' + this.$route.params.id);
-
       try {
         const response = await fetch(
           `https://localhost:5001/api/comiccomment/${this.$route.params.id2}`,
@@ -75,8 +74,6 @@ export default {
           throw error;
         }
 
-        console.log(responseData);
-
         this.comments = [];
 
         for (const key in responseData) {
@@ -87,21 +84,49 @@ export default {
             username: responseData[key].userName,
           };
           this.comments.push(comment);
-          console.log('pushed!');
-          console.log(key);
         }
-        console.log(this.comments);
 
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }
       this.isLoading = false;
     },
-    addComment() {
-      console.log(this.comment);
-      this.comment = '';
+    async addComment() {
+      this.isLoading = true;
 
-      // const currentData = Date.now;
+      try {
+        const response = await fetch(
+          `https://localhost:5001/api/comiccomment`,
+          {
+            method: 'POST',
+            headers: {
+              Authorization: 'Bearer ' + localStorage.getItem('token'),
+              "content-type": "application/json"
+            },
+            body: JSON.stringify({
+              textContent: this.comment,
+              comicId: this.$route.params.id2,
+            })
+          }
+        );
+
+        if (!response.ok) {
+          const error = new Error(
+            response.message || 'Failed to fetch comments!'
+          );
+          this.$toast.error('Comment was not added!');
+          throw error;
+        }
+
+        this.$toast.success('Comment added successfully.');
+        scrollTo('comment');
+
+      } catch (error) {
+        this.error = error.message || 'Comment was not added!';
+      }
+      await this.loadComments();
+      this.isLoading = false;
+      this.comment = '';
     },
   },
 };

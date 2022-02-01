@@ -15,6 +15,7 @@ namespace API.Extentions
             services.AddScoped<IComicSeriesRepository, ComicSeriesRepository>();
             services.AddScoped<IComicRepository, ComicRepository>();
             services.AddScoped<IComicCommentRepository, ComicCommentRepository>();
+            services.AddScoped<IComicSocialRepository, ComicSocialRepository>();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             services.AddDbContext<DataContext>(options =>
             {

@@ -1,25 +1,25 @@
 <template>
   <main class="main">
     <section class="block list-section">
-      <router-link to="/profile/myid/collection" class="link">
+      <router-link to="/collection" class="link">
         <div :title="collected" size="small" class="card collected">
           <collected-icon class="comic-icon"></collected-icon>
           <div class="counter">{{ collected }}</div>Collected
         </div>
       </router-link>
-      <router-link to="/profile/myid/read" class="link">
+      <router-link to="/read" class="link">
         <div :title="read" size="small" class="card read">
           <read-icon class="comic-icon"></read-icon>
           <div class="counter">{{ read }}</div>Read
         </div>
       </router-link>
-      <router-link to="/profile/myid/rated" class="link">
+      <router-link to="/rated" class="link">
         <div :title="rated" size="small" class="card rated">
           <rated-icon class="comic-icon"></rated-icon>
           <div class="counter">{{ rated }}</div>Rated
         </div>
       </router-link>
-      <router-link to="/profile/myid/wishlist" class="link">
+      <router-link to="/wishlist" class="link">
         <div :title="wishlist" size="small" class="card wishlist">
           <wishlist-icon class="comic-icon"></wishlist-icon>
           <div class="counter">{{ wishlist }}</div>Wishlist

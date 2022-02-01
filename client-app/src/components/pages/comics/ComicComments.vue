@@ -119,7 +119,6 @@ export default {
         }
 
         this.$toast.success('Comment added successfully.');
-        scrollTo('comment');
 
       } catch (error) {
         this.error = error.message || 'Comment was not added!';

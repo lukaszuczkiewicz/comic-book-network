@@ -16,11 +16,27 @@
     <div class="action-container">
       <div class="rating">
         <div>
-          <star-outlined class="star"></star-outlined>
-          <star-outlined class="star"></star-outlined>
-          <star-outlined class="star"></star-outlined>
-          <star-outlined class="star"></star-outlined>
-          <star-outlined class="star"></star-outlined>
+          <span @click="rate(0)">remove</span>
+          <span>
+            <star-filled v-if="rating>=1" class="star" @click="rate(1)"></star-filled>
+            <star-outlined v-else class="star" @click="rate(1)"></star-outlined>
+          </span>
+          <span>
+            <star-filled v-if="rating>=2" class="star" @click="rate(2)"></star-filled>
+            <star-outlined v-else class="star" @click="rate(2)"></star-outlined>
+          </span>
+          <span>
+            <star-filled v-if="rating>=3" class="star" @click="rate(3)"></star-filled>
+            <star-outlined v-else class="star" @click="rate(3)"></star-outlined>
+          </span>
+          <span>
+            <star-filled v-if="rating>=4" class="star" @click="rate(4)"></star-filled>
+            <star-outlined v-else class="star" @click="rate(4)"></star-outlined>
+          </span>
+          <span>
+            <star-filled v-if="rating==5" class="star" @click="rate(5)"></star-filled>
+            <star-outlined v-else class="star" @click="rate(5)"></star-outlined>
+          </span>
         </div>
         <div>Average User Score: <span>5.0</span></div>
       </div>
@@ -61,21 +77,25 @@
 
 <script>
 import StarOutlined from '../../../assets/icons/StarOutlined.vue';
+import StarFilled from '../../../assets/icons/StarFilled.vue';
 import ComicComments from '../comics/ComicComments.vue';
 
 export default {
   components: {
     StarOutlined,
+    StarFilled,
     ComicComments
   },
   data() {
     return {
       comic: null,
-      isLoading: true
+      isLoading: true,
+      rating: 0
     };
   },
   created() {
     this.loadComicDetail();
+    this.loadComicSocial();
   },
   methods: {
     async loadComicDetail() {
@@ -116,7 +136,66 @@ export default {
         this.error = error.message || 'Something went wrong!';
       }
       this.isLoading = false;
-    }
+    },
+    async loadComicSocial() {
+      try {
+        const response = await fetch(
+          `https://localhost:5001/api/comic/social/${this.$route.params.id2}`,
+          {
+            headers: {
+              Authorization: 'Bearer ' + localStorage.getItem('token'),
+            },
+          }
+        );
+        const responseData = await response.json();
+
+        if (!response.ok) {
+          const error = new Error(responseData.message || 'Failed to fetch!');
+          throw error;
+        }
+
+        this.rating = responseData.rate;
+        this.isRead = responseData.isRead;
+        this.isInCollection = responseData.isInCollection;
+        this.isInWishlist = responseData.isInWishlist;
+
+      } catch (error) {
+        this.error = error.message || 'Something went wrong!';
+      }
+    },
+    async rate(rateNumber) {
+      if (rateNumber < 0 || rateNumber > 5) return;
+
+      try {
+        const response = await fetch(
+          `https://localhost:5001/api/comic/rate`,
+          {
+            method: 'POST',
+            headers: {
+              Authorization: 'Bearer ' + localStorage.getItem('token'),
+              "content-type": "application/json"
+            },
+            body: JSON.stringify({
+              rate: rateNumber,
+              comicId: this.comic.id,
+            })
+          }
+        );
+
+        if (!response.ok) {
+          const error = new Error(
+            response.message || 'Failed to rate comic!'
+          );
+          this.$toast.error('Comic was not rated!');
+          throw error;
+        }
+
+        this.rating = rateNumber;
+
+      } catch (error) {
+        this.error = error.message || 'Not rated!';
+      }
+    },
   },
 };
 </script>
@@ -154,6 +233,7 @@ export default {
 .star {
   width: 2em;
   height: 2em;
+  cursor: pointer;
 }
 .main-content {
   display: flex;

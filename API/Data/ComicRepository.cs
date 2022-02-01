@@ -65,6 +65,22 @@ namespace API.Data
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<ComicCardDto>> GetRatedComicsAsync(int userId)
+        {
+            return await (from s in _context.ComicSocial
+                         join c in _context.Comic on s.ComicId equals c.Id
+                         join cs in _context.ComicSeries on c.ComicSeriesId equals cs.Id
+                         where s.AppUserId == userId && s.Rate >= 1 && s.Rate <= 5
+                         select new ComicCardDto
+                         {
+                             Id = c.Id,
+                             SeriesName = cs.SeriesName,
+                             Publisher = cs.Publisher,
+                             IssueNumber = c.IssueNumber,
+                             Photo = c.Photo
+                         }).ToListAsync();
+        }
+
         public async Task<bool> SaveAllAsync()
         {
             return await _context.SaveChangesAsync() > 0;

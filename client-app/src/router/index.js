@@ -3,7 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Auth from '../components/pages/auth/Auth.vue';
 import Dashboard from '../components/pages/dashboard/Dashboard.vue';
 import Profile from '../components/pages/profile/Profile.vue';
-// import Rated from '../components/pages/profile/Rated.vue';
+import Rated from '../components/pages/profile/Rated.vue';
 // import Collection from '../components/pages/profile/Collection.vue';
 // import WishList from '../components/pages/profile/WishList.vue';
 // import ReadList from '../components/pages/profile/ReadList.vue';
@@ -49,6 +49,10 @@ const routes = [
   {
     path: '/comics/:id/:id2',
     component: ComicDetail
+  },
+  {
+    path: '/rated',
+    component: Rated
   },
   { path: '/:notFound(.*)', component: NotFound },
   // {

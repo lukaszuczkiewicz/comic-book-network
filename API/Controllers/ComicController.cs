@@ -49,7 +49,7 @@ namespace API.Controllers
             var comic = await _comicRepository.GetComicAsync(id);
             if (comic == null) return BadRequest("Comic does not exist");
 
-            return await _comicSocialRepository.GetComicSocialAsync(id, userId);
+            return await _comicSocialRepository.GetComicSocialDataAsync(id, userId);
         }
 
         [HttpPost("rate")]
@@ -61,19 +61,29 @@ namespace API.Controllers
 
             var comic = await _comicRepository.GetComicAsync(rateToAddDto.ComicId);
             if (comic == null) return BadRequest("Comic does not exist");
+            
+            var existingComicSocial = await _comicSocialRepository.GetComicSocialAsync(rateToAddDto.ComicId, userId);
 
-            //comic social already exists - to do: update existing one
-            if (await _comicSocialRepository.GetComicSocialAsync(rateToAddDto.ComicId, userId) != null) return BadRequest("Comic Social already exists");
-
-            //if comic social doesn't exist - create a new one
-            var comicSocial = new ComicSocial
+            if (existingComicSocial != null) //comic social already exists for this user and comic - update it
             {
-                AppUserId = userId,
-                ComicId = rateToAddDto.ComicId,
-                Rate = rateToAddDto.Rate,
-            };
+                existingComicSocial.Rate = rateToAddDto.Rate;
+                existingComicSocial.IsRead = true;
 
-            _comicSocialRepository.AddComicSocial(comicSocial);
+
+                _comicSocialRepository.Update(existingComicSocial);
+            }
+            else //comic social doesn't exist - create a new one
+            {
+                var comicSocial = new ComicSocial
+                {
+                    AppUserId = userId,
+                    ComicId = rateToAddDto.ComicId,
+                    Rate = rateToAddDto.Rate,
+                    IsRead = true
+                };
+
+                _comicSocialRepository.AddComicSocial(comicSocial);
+            }
 
             if (await _comicSocialRepository.SaveAllAsync()) return Ok();
 

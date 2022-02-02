@@ -23,11 +23,18 @@ namespace API.Data
             _context.ComicSocial.Add(comicSocial);
         }
 
-        public async Task<ComicSocialDto> GetComicSocialAsync(int comicId, int appUserId)
+        public async Task<ComicSocialDto> GetComicSocialDataAsync(int comicId, int appUserId)
         {
             return await _context.ComicSocial
                 .ProjectTo<ComicSocialDto>(_mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync(x => x.ComicId == comicId && x.AppUserId == appUserId);
+        }
+
+        public async Task<ComicSocial> GetComicSocialAsync(int comicId, int appUserId)
+        {
+            return await _context.ComicSocial
+                .Where(x => x.ComicId == comicId && x.AppUserId == appUserId)
+                .FirstOrDefaultAsync();
         }
 
         public async Task<bool> SaveAllAsync()

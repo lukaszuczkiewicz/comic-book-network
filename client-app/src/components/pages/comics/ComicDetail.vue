@@ -42,13 +42,13 @@
       </div>
       <div class="btns-container">
         <div class="buttons">
-          <button class="button in-collection-btn">
+          <button class="button in-collection-btn" :class="isInCollection? 'is-success' : ''">
             <collected-icon class="comic-icon"></collected-icon>
           </button>
-          <button class="button in-read-btn">
+          <button class="button in-read-btn" :class="isRead? 'is-success' : ''">
             <read-icon class="comic-icon"></read-icon>
           </button>
-          <button class="button in-wishlist-btn">
+          <button class="button in-wishlist-btn" :class="isInWishlist? 'is-success' : ''">
             <wishlist-icon class="comic-icon"></wishlist-icon>
           </button>
         </div>
@@ -90,7 +90,10 @@ export default {
     return {
       comic: null,
       isLoading: true,
-      rating: 0
+      rating: 0,
+      isInCollection: false,
+      isRead: false,
+      isInWishlist: false
     };
   },
   created() {
@@ -159,6 +162,10 @@ export default {
         this.isInCollection = responseData.isInCollection;
         this.isInWishlist = responseData.isInWishlist;
 
+        console.log(this.isRead)
+        console.log(this.isInCollection)
+        console.log(this.isInWishlist)
+
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }
@@ -191,6 +198,7 @@ export default {
         }
 
         this.rating = rateNumber;
+        this.isRead = true;
 
       } catch (error) {
         this.error = error.message || 'Not rated!';

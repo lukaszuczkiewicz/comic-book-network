@@ -18,23 +18,43 @@
         <div>
           <span @click="rate(0)">remove</span>
           <span>
-            <star-filled v-if="rating>=1" class="star" @click="rate(1)"></star-filled>
+            <star-filled
+              v-if="rating >= 1"
+              class="star"
+              @click="rate(1)"
+            ></star-filled>
             <star-outlined v-else class="star" @click="rate(1)"></star-outlined>
           </span>
           <span>
-            <star-filled v-if="rating>=2" class="star" @click="rate(2)"></star-filled>
+            <star-filled
+              v-if="rating >= 2"
+              class="star"
+              @click="rate(2)"
+            ></star-filled>
             <star-outlined v-else class="star" @click="rate(2)"></star-outlined>
           </span>
           <span>
-            <star-filled v-if="rating>=3" class="star" @click="rate(3)"></star-filled>
+            <star-filled
+              v-if="rating >= 3"
+              class="star"
+              @click="rate(3)"
+            ></star-filled>
             <star-outlined v-else class="star" @click="rate(3)"></star-outlined>
           </span>
           <span>
-            <star-filled v-if="rating>=4" class="star" @click="rate(4)"></star-filled>
+            <star-filled
+              v-if="rating >= 4"
+              class="star"
+              @click="rate(4)"
+            ></star-filled>
             <star-outlined v-else class="star" @click="rate(4)"></star-outlined>
           </span>
           <span>
-            <star-filled v-if="rating==5" class="star" @click="rate(5)"></star-filled>
+            <star-filled
+              v-if="rating == 5"
+              class="star"
+              @click="rate(5)"
+            ></star-filled>
             <star-outlined v-else class="star" @click="rate(5)"></star-outlined>
           </span>
         </div>
@@ -42,13 +62,25 @@
       </div>
       <div class="btns-container">
         <div class="buttons">
-          <button class="button in-collection-btn" :class="isInCollection? 'is-success' : ''">
+          <button
+            class="button in-collection-btn"
+            :class="isInCollection ? 'is-success' : ''"
+            @click="addToList('collection')"
+          >
             <collected-icon class="comic-icon"></collected-icon>
           </button>
-          <button class="button in-read-btn" :class="isRead? 'is-success' : ''">
+          <button
+            class="button in-read-btn"
+            :class="isRead ? 'is-success' : ''"
+            @click="addToList('read')"
+          >
             <read-icon class="comic-icon"></read-icon>
           </button>
-          <button class="button in-wishlist-btn" :class="isInWishlist? 'is-success' : ''">
+          <button
+            class="button in-wishlist-btn"
+            :class="isInWishlist ? 'is-success' : ''"
+            @click="addToList('wishlist')"
+          >
             <wishlist-icon class="comic-icon"></wishlist-icon>
           </button>
         </div>
@@ -71,7 +103,6 @@
     </div>
 
     <comic-comments></comic-comments>
-
   </div>
 </template>
 
@@ -84,7 +115,7 @@ export default {
   components: {
     StarOutlined,
     StarFilled,
-    ComicComments
+    ComicComments,
   },
   data() {
     return {
@@ -93,7 +124,7 @@ export default {
       rating: 0,
       isInCollection: false,
       isRead: false,
-      isInWishlist: false
+      isInWishlist: false,
     };
   },
   created() {
@@ -134,7 +165,6 @@ export default {
           writer: responseData.writer,
           artist: responseData.artist,
         };
-
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }
@@ -162,10 +192,6 @@ export default {
         this.isInCollection = responseData.isInCollection;
         this.isInWishlist = responseData.isInWishlist;
 
-        console.log(this.isRead)
-        console.log(this.isInCollection)
-        console.log(this.isInWishlist)
-
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }
@@ -174,32 +200,54 @@ export default {
       if (rateNumber < 0 || rateNumber > 5) return;
 
       try {
-        const response = await fetch(
-          `https://localhost:5001/api/comic/rate`,
-          {
-            method: 'POST',
-            headers: {
-              Authorization: 'Bearer ' + localStorage.getItem('token'),
-              "content-type": "application/json"
-            },
-            body: JSON.stringify({
-              rate: rateNumber,
-              comicId: this.comic.id,
-            })
-          }
-        );
+        const response = await fetch(`https://localhost:5001/api/comic/rate`, {
+          method: 'POST',
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+            'content-type': 'application/json',
+          },
+          body: JSON.stringify({
+            rate: rateNumber,
+            comicId: this.comic.id,
+          }),
+        });
 
         if (!response.ok) {
-          const error = new Error(
-            response.message || 'Failed to rate comic!'
-          );
+          const error = new Error(response.message || 'Failed to rate comic!');
           this.$toast.error('Comic was not rated!');
           throw error;
         }
 
         this.rating = rateNumber;
-        this.isRead = true;
+        if (rateNumber >= 1) this.isRead = true;
 
+      } catch (error) {
+        this.error = error.message || 'Not rated!';
+      }
+    },
+    async addToList(listName) {
+      try {
+        const response = await fetch(
+          `https://localhost:5001/api/comic/add-to-${listName}`,
+          {
+            method: 'POST',
+            headers: {
+              Authorization: 'Bearer ' + localStorage.getItem('token'),
+              'content-type': 'application/json',
+            },
+            body: JSON.stringify({
+              comicId: this.comic.id,
+            }),
+          }
+        );
+
+        if (!response.ok) {
+          const error = new Error(response.message || 'Failed to send!');
+          this.$toast.error(`Comic was not added to ${listName}!`);
+          throw error;
+        }
+
+        this.loadComicSocial();
       } catch (error) {
         this.error = error.message || 'Not rated!';
       }

@@ -4,9 +4,9 @@ import Auth from '../components/pages/auth/Auth.vue';
 import Dashboard from '../components/pages/dashboard/Dashboard.vue';
 import Profile from '../components/pages/profile/Profile.vue';
 import Rated from '../components/pages/profile/Rated.vue';
-// import Collection from '../components/pages/profile/Collection.vue';
-// import WishList from '../components/pages/profile/WishList.vue';
-// import ReadList from '../components/pages/profile/ReadList.vue';
+import Collection from '../components/pages/profile/Collection.vue';
+import WishList from '../components/pages/profile/WishList.vue';
+import ReadList from '../components/pages/profile/ReadList.vue';
 import Comics from '../components/pages/comics/Comics.vue';
 import SeriesDetail from '../components/pages/comics/SeriesDetail.vue';
 import ComicDetail from '../components/pages/comics/ComicDetail.vue';
@@ -53,6 +53,18 @@ const routes = [
   {
     path: '/rated',
     component: Rated
+  },
+  {
+    path: '/collection',
+    component: Collection
+  },
+  {
+    path: '/read',
+    component: ReadList
+  },
+  {
+    path: '/wishlist',
+    component: WishList
   },
   { path: '/:notFound(.*)', component: NotFound },
   // {

@@ -1,5 +1,7 @@
 <template>
-  <comic-grid title="Rated Comics">
+<div>
+  <list-counters></list-counters>
+  <comic-grid title="Comics Rated">
     <comic-card
       v-for="comic in comics"
       :key="comic.id"
@@ -11,16 +13,19 @@
       :issueNumber="comic.issueNumber"
     ></comic-card>
   </comic-grid>
+</div>
 </template>
 
 <script>
 import ComicGrid from '../../ui/ComicGrid.vue';
 import ComicCard from '../../ui/ComicCard.vue';
+import ListCounters from '../dashboard/ListCounters.vue';
 
 export default {
   components: {
     ComicGrid,
     ComicCard,
+    ListCounters
   },
   data() {
     return {

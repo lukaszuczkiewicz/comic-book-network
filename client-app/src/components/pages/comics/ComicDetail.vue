@@ -71,14 +71,14 @@
           </button>
           <button
             class="button in-read-btn"
-            :class="isRead ? 'is-success' : ''"
+            :class="isRead ? 'is-info' : ''"
             @click="addToList('read')"
           >
             <read-icon class="comic-icon"></read-icon>
           </button>
           <button
             class="button in-wishlist-btn"
-            :class="isInWishlist ? 'is-success' : ''"
+            :class="isInWishlist ? 'is-warning' : ''"
             @click="addToList('wishlist')"
           >
             <wishlist-icon class="comic-icon"></wishlist-icon>

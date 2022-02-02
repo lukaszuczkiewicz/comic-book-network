@@ -75,7 +75,7 @@ namespace API.Controllers
                     AppUserId = userId,
                     ComicId = rateToAddDto.ComicId,
                     Rate = rateToAddDto.Rate,
-                    IsRead = true
+                    IsRead = (rateToAddDto.Rate > 0)
                 };
 
                 _comicSocialRepository.AddComicSocial(comicSocial);

@@ -1,5 +1,11 @@
 <template>
   <section class="block list-section">
+      <router-link to="/rated" class="link">
+        <div :title="rated" size="small" class="card rated">
+          <rated-icon class="comic-icon"></rated-icon>
+          <div class="counter">{{ rated }}</div>Rated
+        </div>
+      </router-link>
       <router-link to="/collection" class="link">
         <div :title="collected" size="small" class="card collected">
           <collected-icon class="comic-icon"></collected-icon>
@@ -10,12 +16,6 @@
         <div :title="read" size="small" class="card read">
           <read-icon class="comic-icon"></read-icon>
           <div class="counter">{{ read }}</div>Read
-        </div>
-      </router-link>
-      <router-link to="/rated" class="link">
-        <div :title="rated" size="small" class="card rated">
-          <rated-icon class="comic-icon"></rated-icon>
-          <div class="counter">{{ rated }}</div>Rated
         </div>
       </router-link>
       <router-link to="/wishlist" class="link">
@@ -37,19 +37,20 @@
   cursor: pointer;
   transition: all 0.5s ease-in;
   padding: 1em;
-  margin: 0 0.5em
+  margin: 0 0.5em;
+  color: white;
 }
 .collected {
-  background-color: rgb(129, 210, 212);
+  background-color: hsl(171, 100%, 41%);
 }
 .read {
-  background-color: rgb(154, 214, 119);
+  background-color: hsl(204, 86%, 53%);
 }
 .rated {
-  background-color: rgb(237, 255, 72);
+  background-color: hsl(217, 71%, 53%);
 }
 .wishlist {
-  background-color: #cccccc;
+  background-color: hsl(48, 100%, 67%);
 }
 .card:hover {
   transform: scale(1.02);

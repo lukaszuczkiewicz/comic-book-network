@@ -49,39 +49,59 @@ namespace API.Controllers
             var comic = await _comicRepository.GetComicAsync(id);
             if (comic == null) return BadRequest("Comic does not exist");
 
-            return await _comicSocialRepository.GetComicSocialDataAsync(id, userId);
+            var averageRating = await _comicSocialRepository.GetAverageRatingAsync(id);
+
+            var comicSocial = await _comicSocialRepository.GetComicSocialDataAsync(id, userId);
+
+            if (comicSocial == null)
+            {
+                comicSocial = new ComicSocialDto();
+            }
+
+            comicSocial.AverageRating = averageRating;
+
+            return comicSocial;
         }
 
         [HttpPost("rate")]
         public async Task<ActionResult> RateComic(RateToAddDto rateToAddDto)
         {
-            var userId = await GetUserId();
+            if (rateToAddDto.Rate > 5) return BadRequest("Rate value cannot be larger than 5");
 
+            var userId = await GetUserId();
             var comic = await _comicRepository.GetComicAsync(rateToAddDto.ComicId);
             if (comic == null) return BadRequest("Comic does not exist");
-            
+
             var existingComicSocial = await _comicSocialRepository.GetComicSocialAsync(rateToAddDto.ComicId, userId);
 
-            if (existingComicSocial != null) //comic social already exists for this user and comic - update it
+            if (existingComicSocial == null && rateToAddDto.Rate < 1) //don't create an entry
             {
-                existingComicSocial.Rate = rateToAddDto.Rate;
-                //adding rating means that user read that comic
-                if (existingComicSocial.Rate > 0) existingComicSocial.IsRead = true;
-
-                _comicSocialRepository.Update(existingComicSocial);
+                return BadRequest("No need to add an empty rate");
             }
-            else //comic social doesn't exist - create a new one
+            else if (existingComicSocial == null) //comic social doesn't exist - create a new entry
             {
                 var comicSocial = new ComicSocial
                 {
                     AppUserId = userId,
                     ComicId = rateToAddDto.ComicId,
                     Rate = rateToAddDto.Rate,
-                    IsRead = (rateToAddDto.Rate > 0)
+                    IsRead = true
                 };
 
                 _comicSocialRepository.AddComicSocial(comicSocial);
             }
+            else //comic social already exists for this user and comic - update it
+            {
+                existingComicSocial.Rate = rateToAddDto.Rate;
+
+                if (existingComicSocial.Rate > 0) //adding rating means that user read that comic
+                {
+                    existingComicSocial.IsRead = true;
+                }
+
+                _comicSocialRepository.Update(existingComicSocial);
+            }
+
 
             if (await _comicSocialRepository.SaveAllAsync()) return Ok();
 

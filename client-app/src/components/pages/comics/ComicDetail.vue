@@ -53,7 +53,7 @@
 
             <remove-icon @click="rate(0)" class="remove"></remove-icon>
         </div>
-        <div>Average User Score: <span>5.0</span></div>
+        <div>Average User Score: <span>{{ averageRating? averageRating : "N/A" }}</span></div>
       </div>
       <div class="btns-container">
         <div class="buttons">
@@ -119,6 +119,7 @@ export default {
       comic: null,
       isLoading: true,
       rating: 0,
+      averageRating: null,
       isInCollection: false,
       isRead: false,
       isInWishlist: false,
@@ -188,6 +189,7 @@ export default {
         this.isRead = responseData.isRead;
         this.isInCollection = responseData.isInCollection;
         this.isInWishlist = responseData.isInWishlist;
+        this.averageRating = responseData.averageRating;
 
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
@@ -217,6 +219,7 @@ export default {
 
         this.rating = rateNumber;
         if (rateNumber >= 1) this.isRead = true;
+        this.loadComicSocial();
 
       } catch (error) {
         this.error = error.message || 'Not rated!';

@@ -37,6 +37,18 @@ namespace API.Data
                 .FirstOrDefaultAsync();
         }
 
+        public async Task<double?> GetAverageRatingAsync(int comicId)
+        {
+            var allValues = await _context.ComicSocial
+                .Where(x => x.ComicId == comicId && x.Rate != 0)
+                .Select(x => x.Rate)
+                .ToArrayAsync();
+
+            if (allValues.Length > 0) return allValues.Average();
+
+            return null;
+        }
+
         public async Task<bool> SaveAllAsync()
         {
             return await _context.SaveChangesAsync() > 0;

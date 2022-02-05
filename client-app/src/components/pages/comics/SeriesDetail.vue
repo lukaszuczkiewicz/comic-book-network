@@ -5,9 +5,9 @@
       <h2 class="title is-1">{{ series.seriesName }}</h2>
       <div class="header-box">
 
-      <p>Publisher: {{ series.publisher }}</p>
-      <p>Published From: {{ series.startYear }}</p>
-      <p>Published To: {{ series.endYear }}</p>
+      <p>Publisher: <span class="bold">{{ series.publisher }}</span></p>
+      <p>Published From: <span class="bold">{{ series.startYear }}</span></p>
+      <p>Published To: <span class="bold">{{ series.endYear? series.endYear : "ongoing" }}</span></p>
       </div>
     </div>
     <comic-grid title="Comics" :listType="'from-series/' + this.$route.params.id"></comic-grid>
@@ -16,7 +16,6 @@
 
 <script>
 import ComicGrid from '../../ui/ComicGrid.vue';
-// import ComicCard from '../../ui/ComicCard.vue';
 
 export default {
   components: {
@@ -74,5 +73,8 @@ export default {
   padding: 1em;
   border-radius: 6px;
   margin-bottom: 2em;
+}
+.bold {
+  font-weight: bold;
 }
 </style>

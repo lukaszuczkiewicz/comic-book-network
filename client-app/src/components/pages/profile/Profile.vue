@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="profile-container">
     <div v-if="!isLoading">
 
       <form @submit.prevent="save">
@@ -20,7 +20,7 @@
         <div class="field">
           <label class="label">About me</label>
           <div class="control">
-            <input class="input" type="text" v-model="introduction" />
+            <textarea class="textarea" v-model="introduction"></textarea>
           </div>
         </div>
       
@@ -108,3 +108,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.profile-container {
+  max-width: 450px;
+  margin: 0 auto;
+}
+</style>

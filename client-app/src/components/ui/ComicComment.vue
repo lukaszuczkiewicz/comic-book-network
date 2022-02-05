@@ -41,6 +41,7 @@ export default {
   border-radius: 100%;
   width: 50px;
   margin-right: 0.5em;
+  align-self: flex-start;
 }
 .username {
   font-weight: bold;

@@ -260,7 +260,7 @@ export default {
 .main-container {
   max-width: 1000px;
   margin: 2em auto 0 auto;
-  padding: 0 1em;
+  padding: 0 1em 1em;
 }
 .info-header {
   text-align: left;
@@ -278,6 +278,13 @@ export default {
   margin-top: 0.75em;
   text-align: left;
 }
+
+.rating {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .button {
   color: black;
   width: 4em;
@@ -286,6 +293,7 @@ export default {
 }
 .comic-img {
   width: 400px;
+  align-self: flex-start;
 }
 .star {
   width: 2em;
@@ -327,4 +335,24 @@ export default {
   cursor: pointer;
   margin-left: 0.6em;
 }
+
+@media (max-width: 700px) {
+  .comic-img {
+    margin: 0 auto 1em auto;
+  }
+  .main-content {
+    flex-direction: column-reverse;
+  }
+}
+
+@media (max-width: 480px) {
+  .action-container {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+  .rating {
+    margin-top : 1em;
+  }
+}
+
 </style>

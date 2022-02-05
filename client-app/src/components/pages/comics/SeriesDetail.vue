@@ -10,35 +10,20 @@
       <p>Published To: {{ series.endYear }}</p>
       </div>
     </div>
-
-    <p v-if="comics.length===0">There are no issues added for this series.</p>
-    <comic-grid v-else title="All issues:">
-      <comic-card
-        v-for="comic in comics"
-        :key="comic.id"
-        :title="series.seriesName"
-        :publisher="series.publisher"
-        :comicId="comic.id"
-        :issueNumber="comic.issueNumber"
-        :coverTitle="comic.photo"
-        :coverAlt="'Comic Cover'"
-      ></comic-card>
-    </comic-grid>
+    <comic-grid title="Comics" :listType="'from-series/' + this.$route.params.id"></comic-grid>
   </div>
 </template>
 
 <script>
 import ComicGrid from '../../ui/ComicGrid.vue';
-import ComicCard from '../../ui/ComicCard.vue';
+// import ComicCard from '../../ui/ComicCard.vue';
 
 export default {
   components: {
-    ComicGrid,
-    ComicCard,
+    ComicGrid
   },
   data() {
     return {
-      comics: [],
       series: null,
       isLoading: true,
     };
@@ -73,8 +58,6 @@ export default {
           startYear: responseData.startYear,
           endYear: responseData.endYear,
         };
-
-        this.comics = responseData.comics;
       } catch (error) {
         this.error = error.message || 'Something went wrong!';
       }

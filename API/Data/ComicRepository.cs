@@ -47,21 +47,27 @@ namespace API.Data
                 })
                 .SingleOrDefaultAsync();
         }
-        public async Task<IEnumerable<ComicCardDto>> GetLatestComicsAsync()
+        public async Task<IEnumerable<ComicCardDto>> GetLatestComicsAsync(int userId)
         {
-            return await _context.Comic
-                .Join(_context.ComicSeries, c => c.ComicSeriesId, s => s.Id, (c, s) => new { c, s })
-                .OrderByDescending(joined => joined.c.Id)
-                .Take(10)
-                .Select(x => new ComicCardDto
-                {
-                    Id = x.c.Id,
-                    SeriesName = x.s.SeriesName,
-                    Publisher = x.s.Publisher,
-                    IssueNumber = x.c.IssueNumber,
-                    Photo = x.c.Photo
-                })
-                .ToListAsync();
+            var comicSocialForThisUser = _context.ComicSocial.Where(cs => cs.AppUserId == userId);
+
+            return await (from c in _context.Comic
+                          join cs in _context.ComicSeries on c.ComicSeriesId equals cs.Id
+                          join s in comicSocialForThisUser on c.Id equals s.ComicId into comicSoc
+                          from s in comicSoc.DefaultIfEmpty()
+                          orderby c.Id descending
+                          select new ComicCardDto
+                          {
+                                Id = c.Id,
+                                SeriesName = cs.SeriesName,
+                                Publisher = cs.Publisher,
+                                IssueNumber = c.IssueNumber,
+                                Photo = c.Photo,
+                                //comic social
+                                IsRead = s.IsRead,
+                                IsInCollection = s.IsInCollection,
+                                IsInWishlist = s.IsInWishlist
+                          }).Take(10).ToListAsync();
         }
 
         public async Task<IEnumerable<ComicCardDto>> GetComicsFromCollectionAsync(int userId)
@@ -76,7 +82,11 @@ namespace API.Data
                              SeriesName = cs.SeriesName,
                              Publisher = cs.Publisher,
                              IssueNumber = c.IssueNumber,
-                             Photo = c.Photo
+                             Photo = c.Photo,
+                             //comic social
+                             IsRead = s.IsRead,
+                             IsInCollection = s.IsInCollection,
+                             IsInWishlist = s.IsInWishlist
                          }).ToListAsync();
         }
 
@@ -92,7 +102,11 @@ namespace API.Data
                              SeriesName = cs.SeriesName,
                              Publisher = cs.Publisher,
                              IssueNumber = c.IssueNumber,
-                             Photo = c.Photo
+                             Photo = c.Photo,
+                             //comic social
+                             IsRead = s.IsRead,
+                             IsInCollection = s.IsInCollection,
+                             IsInWishlist = s.IsInWishlist
                          }).ToListAsync();
         }
 
@@ -108,13 +122,17 @@ namespace API.Data
                              SeriesName = cs.SeriesName,
                              Publisher = cs.Publisher,
                              IssueNumber = c.IssueNumber,
-                             Photo = c.Photo
+                             Photo = c.Photo,
+                             //comic social
+                             IsRead = s.IsRead,
+                             IsInCollection = s.IsInCollection,
+                             IsInWishlist = s.IsInWishlist
                          }).ToListAsync();
         }
 
         public async Task<IEnumerable<ComicCardDto>> GetReadComicsAsync(int userId)
         {
-            return await(from s in _context.ComicSocial
+            return await (from s in _context.ComicSocial
                          join c in _context.Comic on s.ComicId equals c.Id
                          join cs in _context.ComicSeries on c.ComicSeriesId equals cs.Id
                          where s.AppUserId == userId && s.IsRead == true
@@ -124,8 +142,35 @@ namespace API.Data
                              SeriesName = cs.SeriesName,
                              Publisher = cs.Publisher,
                              IssueNumber = c.IssueNumber,
-                             Photo = c.Photo
+                             Photo = c.Photo,
+                             //comic social
+                             IsRead = s.IsRead,
+                             IsInCollection = s.IsInCollection,
+                             IsInWishlist = s.IsInWishlist
                          }).ToListAsync();
+        }
+
+        public async Task<IEnumerable<ComicCardDto>> GetComicsFromSeriesAsync(int userId, int seriesId)
+        {
+            var comicSocialForThisUser = _context.ComicSocial.Where(cs => cs.AppUserId == userId);
+
+            return await (from c in _context.Comic
+                          where c.ComicSeriesId == seriesId
+                          join soc in comicSocialForThisUser on c.Id equals soc.ComicId into joined
+                          from j in joined.DefaultIfEmpty()
+                          join cs in _context.ComicSeries on c.ComicSeriesId equals cs.Id
+                          select new ComicCardDto
+                          {
+                              Id = c.Id,
+                              SeriesName = cs.SeriesName,
+                              Publisher = cs.Publisher,
+                              IssueNumber = c.IssueNumber,
+                              Photo = c.Photo,
+                              //comic social
+                              IsRead = j.IsRead,
+                              IsInCollection = j.IsInCollection,
+                              IsInWishlist = j.IsInWishlist
+                          }).ToListAsync();
         }
 
         public async Task<bool> SaveAllAsync()

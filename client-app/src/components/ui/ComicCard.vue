@@ -1,21 +1,33 @@
 <template>
   <div class="comic-card">
     <router-link :to="'/comics/1/' + comicId" class="link">
-    <img
-      class="comic-img"
-      :src="require(`../../assets/covers/${coverTitle}`)"
-      :alt="coverAlt"
-    />
+      <img
+        class="comic-img"
+        :src="require(`../../assets/covers/${coverTitle}`)"
+        :alt="coverAlt"
+      />
     </router-link>
     <div class="btns-container">
       <div class="buttons has-addons">
-        <button class="button in-collection-btn">
+        <button
+          class="button in-collection-btn"
+          :class="isInCollectionData ? 'is-success' : ''"
+          @click="addToList('collection')"
+        >
           <collected-icon class="comic-icon"></collected-icon>
         </button>
-        <button class="button in-read-btn">
+        <button
+          class="button in-read-btn"
+          :class="isReadData ? 'is-info' : ''"
+          @click="addToList('read')"
+        >
           <read-icon class="comic-icon"></read-icon>
         </button>
-        <button class="button in-wishlist-btn">
+        <button
+          class="button in-wishlist-btn"
+          :class="isInWishlistData ? 'is-warning' : ''"
+          @click="addToList('wishlist')"
+        >
           <wishlist-icon class="comic-icon"></wishlist-icon>
         </button>
       </div>
@@ -32,7 +44,7 @@ export default {
   props: {
     comicId: {
       required: true,
-      type: Number
+      type: Number,
     },
     coverTitle: {
       required: true,
@@ -54,26 +66,80 @@ export default {
       required: true,
       type: Number,
     },
+    isInCollection: {
+      required: false,
+      type: Boolean,
+    },
+    isRead: {
+      required: false,
+      type: Boolean,
+    },
+    isInWishlist: {
+      required: false,
+      type: Boolean,
+    },
+  },
+  data() {
+    return {
+      isInCollectionData: this.isInCollection,
+      isReadData: this.isRead,
+      isInWishlistData: this.isInWishlist
+    }
   },
   methods: {
-    async toggleCollected() {
-      const actionPayload = {
-        comicId: this.comicId
-      };
-
+    async addToList(listName) {
       try {
-        await this.$store.dispatch('toggle-collected', actionPayload);
-      } catch (err) {
-        console.log(err);
+        const response = await fetch(
+          `https://localhost:5001/api/comic/add-to-${listName}`,
+          {
+            method: 'POST',
+            headers: {
+              Authorization: 'Bearer ' + localStorage.getItem('token'),
+              'content-type': 'application/json',
+            },
+            body: JSON.stringify({
+              comicId: this.comicId,
+            }),
+          }
+        );
+
+        if (!response.ok) {
+          const error = new Error(response.message || 'Failed to send!');
+          this.$toast.error(`Comic was not added to ${listName}!`);
+          throw error;
+        }
+
+        this.loadComicSocial();
+      } catch (error) {
+        this.error = error.message || 'Not rated!';
       }
     },
-    async toggleRead() {
+    async loadComicSocial() {
+      try {
+        const response = await fetch(
+          `https://localhost:5001/api/comic/social/${this.comicId}`,
+          {
+            headers: {
+              Authorization: 'Bearer ' + localStorage.getItem('token'),
+            },
+          }
+        );
+        const responseData = await response.json();
 
+        if (!response.ok) {
+          const error = new Error(responseData.message || 'Failed to fetch!');
+          throw error;
+        }
+
+        this.isReadData = responseData.isRead;
+        this.isInCollectionData = responseData.isInCollection;
+        this.isInWishlistData = responseData.isInWishlist;
+
+      } catch (error) {
+        this.error = error.message || 'Something went wrong!';
+      }
     },
-    async toggleWishlist() {
-      
-    },
-  }
+  },
 };
 </script>
 

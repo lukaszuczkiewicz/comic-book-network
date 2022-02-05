@@ -25,10 +25,12 @@ namespace API.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
+        [HttpGet("latest")]
         public async Task<ActionResult<IEnumerable<ComicCardDto>>> GetLatestComics()
         {
-            var latestComics = await _comicRepository.GetLatestComicsAsync();
+            var userId = await GetUserId();
+
+            var latestComics = await _comicRepository.GetLatestComicsAsync(userId);
 
             return Ok(latestComics);
         }
@@ -99,6 +101,7 @@ namespace API.Controllers
             if (existingComicSocial != null) //comic social already exists for this user and comic - update it
             {
                 existingComicSocial.IsInCollection = !existingComicSocial.IsInCollection;
+                existingComicSocial.IsInWishlist = false;
 
                 _comicSocialRepository.Update(existingComicSocial);
             }
@@ -165,6 +168,7 @@ namespace API.Controllers
             if (existingComicSocial != null) //comic social already exists for this user and comic - update it
             {
                 existingComicSocial.IsInWishlist = !existingComicSocial.IsInWishlist;
+                existingComicSocial.IsInCollection = false;
 
                 _comicSocialRepository.Update(existingComicSocial);
             }
@@ -217,6 +221,15 @@ namespace API.Controllers
         {
             var userId = await GetUserId();
             var comics = await _comicRepository.GetComicsFromWishlistAsync(userId);
+
+            return Ok(comics);
+        }
+
+        [HttpGet("from-series/{id}")]
+        public async Task<ActionResult<IEnumerable<ComicCardDto>>> GetComicsFromSeries(int id)
+        {
+            var userId = await GetUserId();
+            var comics = await _comicRepository.GetComicsFromSeriesAsync(userId, id);
 
             return Ok(comics);
         }

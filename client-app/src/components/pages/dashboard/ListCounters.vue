@@ -1,27 +1,31 @@
 <template>
   <section class="block list-section">
-      <router-link to="/rated" class="link">
-        <div :title="rated" size="small" class="card rated">
+      <router-link to="/lists/rated" class="link">
+        <div title="rated" size="small" class="card rated">
           <rated-icon class="comic-icon"></rated-icon>
-          <div class="counter">{{ rated }}</div>Rated
+          <!-- <div class="counter">{{ rated }}</div> -->
+          Rated
         </div>
       </router-link>
-      <router-link to="/collection" class="link">
-        <div :title="collected" size="small" class="card collected">
+      <router-link to="/lists/collection" class="link">
+        <div title="collected" size="small" class="card collected">
           <collected-icon class="comic-icon"></collected-icon>
-          <div class="counter">{{ collected }}</div>Collected
+          <!-- <div class="counter">{{ collected }}</div> -->
+          Collected
         </div>
       </router-link>
-      <router-link to="/read" class="link">
-        <div :title="read" size="small" class="card read">
+      <router-link to="/lists/read" class="link">
+        <div title="read" size="small" class="card read">
           <read-icon class="comic-icon"></read-icon>
-          <div class="counter">{{ read }}</div>Read
+          <!-- <div class="counter">{{ read }}</div> -->
+          Read
         </div>
       </router-link>
-      <router-link to="/wishlist" class="link">
-        <div :title="wishlist" size="small" class="card wishlist">
+      <router-link to="/lists/wishlist" class="link">
+        <div title="wishlist" size="small" class="card wishlist">
           <wishlist-icon class="comic-icon"></wishlist-icon>
-          <div class="counter">{{ wishlist }}</div>Wishlist
+          <!-- <div class="counter">{{ wishlist }}</div> -->
+          Wishlist
         </div>
       </router-link>
     </section>
@@ -47,7 +51,7 @@
   background-color: hsl(204, 86%, 53%);
 }
 .rated {
-  background-color: hsl(217, 71%, 53%);
+  background-color: hsl(355, 71%, 53%);
 }
 .wishlist {
   background-color: hsl(48, 100%, 67%);

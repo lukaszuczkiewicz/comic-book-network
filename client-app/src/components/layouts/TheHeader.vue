@@ -29,7 +29,7 @@
             >Dashboard</router-link
           >
           <router-link to="/comics" class="navbar-item">Browse</router-link>
-          <router-link to="/profile/myid" class="navbar-item"
+          <router-link to="/lists/collection" class="navbar-item"
             >Lists</router-link
           >
         </div>

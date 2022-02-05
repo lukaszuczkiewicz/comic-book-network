@@ -15,48 +15,43 @@
 
     <div class="action-container">
       <div class="rating">
-        <div>
-          <span @click="rate(0)">remove</span>
-          <span>
+        <div class="flex">
             <star-filled
               v-if="rating >= 1"
               class="star"
               @click="rate(1)"
             ></star-filled>
             <star-outlined v-else class="star" @click="rate(1)"></star-outlined>
-          </span>
-          <span>
+
             <star-filled
               v-if="rating >= 2"
               class="star"
               @click="rate(2)"
             ></star-filled>
             <star-outlined v-else class="star" @click="rate(2)"></star-outlined>
-          </span>
-          <span>
+
             <star-filled
               v-if="rating >= 3"
               class="star"
               @click="rate(3)"
             ></star-filled>
             <star-outlined v-else class="star" @click="rate(3)"></star-outlined>
-          </span>
-          <span>
+
             <star-filled
               v-if="rating >= 4"
               class="star"
               @click="rate(4)"
             ></star-filled>
             <star-outlined v-else class="star" @click="rate(4)"></star-outlined>
-          </span>
-          <span>
+
             <star-filled
               v-if="rating == 5"
               class="star"
               @click="rate(5)"
             ></star-filled>
             <star-outlined v-else class="star" @click="rate(5)"></star-outlined>
-          </span>
+
+            <remove-icon @click="rate(0)" class="remove"></remove-icon>
         </div>
         <div>Average User Score: <span>5.0</span></div>
       </div>
@@ -109,6 +104,7 @@
 <script>
 import StarOutlined from '../../../assets/icons/StarOutlined.vue';
 import StarFilled from '../../../assets/icons/StarFilled.vue';
+import RemoveIcon from '../../../assets/icons/RemoveIcon.vue';
 import ComicComments from '../comics/ComicComments.vue';
 
 export default {
@@ -116,6 +112,7 @@ export default {
     StarOutlined,
     StarFilled,
     ComicComments,
+    RemoveIcon
   },
   data() {
     return {
@@ -276,6 +273,7 @@ export default {
   justify-content: space-between;
   border-radius: 6px;
   margin-top: 0.75em;
+  text-align: left;
 }
 .button {
   color: black;
@@ -317,5 +315,13 @@ export default {
 }
 .add-comment-btn {
   width: 150px;
+}
+.flex {
+  display: flex;
+  align-items: center;
+}
+.remove {
+  cursor: pointer;
+  margin-left: 0.6em;
 }
 </style>

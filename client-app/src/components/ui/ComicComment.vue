@@ -7,7 +7,11 @@
           <span class="username">{{ username }}</span>
           <span class="date">{{ date }}</span>
         </div>
-        <button v-if="displayDeleteBtn" @click="deleteComment" class="delete-btn">X Delete</button>
+        <button
+          v-if="displayDeleteBtn"
+          @click="deleteComment"
+          class="button is-danger is-small is-outlined delete-btn">Delete
+        </button>
       </div>
       <p class="text-content">{{ description }}</p>
     </div>
@@ -100,8 +104,5 @@ export default {
 .date {
   color: #999999;
   font-size: 0.75em;
-}
-.delete-btn {
-  color: red;
 }
 </style>

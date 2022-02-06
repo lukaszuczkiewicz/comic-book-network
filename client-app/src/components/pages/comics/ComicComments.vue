@@ -25,11 +25,14 @@
     </form>
 
     <comic-comment
+      @refresh="updateComments(c.id)"
       v-for="c in comments"
       :key="c.id"
+      :id="c.id"
       :date="this.getConvertedDate(c.date)"
       :description="c.textContent"
       :username="c.username"
+      :displayDeleteBtn="savedUsername === c.username"
     >
     </comic-comment>
   </section>
@@ -47,12 +50,16 @@ export default {
       isLoading: true,
       comment: '',
       comments: [],
+      savedUsername: localStorage.getItem('username')
     };
   },
   created() {
     this.loadComments();
   },
   methods: {
+    updateComments(deletedCommentId) {
+      this.comments = this.comments.filter(c => c.id != deletedCommentId);
+    },
     async loadComments() {
       this.isLoading = true;
 
@@ -81,7 +88,7 @@ export default {
             id: responseData[key].id,
             date: responseData[key].date,
             textContent: responseData[key].textContent,
-            username: responseData[key].userName,
+            username: responseData[key].userName
           };
           this.comments.push(comment);
         }

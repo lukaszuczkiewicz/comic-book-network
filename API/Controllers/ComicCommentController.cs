@@ -69,5 +69,27 @@ namespace API.Controllers
 
             return Ok(comments);
         }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteComment(int id)
+        {
+            var username = User.GetUsername();
+            var user = await _userRepository.GetUserByUsernameAsync(username);
+            var userId = user.Id;
+
+            var comment = await _commentRepository.GetComicComment(id);
+
+            if (comment == null)
+                return BadRequest("Comment does not exist.");
+
+            if (comment.AppUserId != userId)
+                return Unauthorized();
+
+            _commentRepository.DeleteComicComment(comment);
+
+            if (await _commentRepository.SaveAllAsync()) return Ok();
+
+            return BadRequest("Problem deleting the comment");
+        }
     }
 }

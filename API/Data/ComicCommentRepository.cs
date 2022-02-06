@@ -70,6 +70,17 @@ namespace API.Data
             _context.ComicComment.Add(comment);
         }
 
+        public void DeleteComicComment(ComicComment comment)
+        {
+            _context.ComicComment.Remove(comment);
+        }
+
+        public async Task<ComicComment> GetComicComment(int id)
+        {
+            return await _context.ComicComment
+                .SingleOrDefaultAsync(x => x.Id == id);
+        }
+
         public async Task<bool> SaveAllAsync()
         {
             return await _context.SaveChangesAsync() > 0;

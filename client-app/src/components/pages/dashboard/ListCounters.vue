@@ -52,7 +52,7 @@ export default {
   padding: 1em;
   margin: 0 0.5em;
   color: white;
-  background: #505050;
+  background: #7c7c7c;
 }
 .comic-icon {
   width: 100%;

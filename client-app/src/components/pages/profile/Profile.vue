@@ -1,5 +1,6 @@
 <template>
   <div class="profile-container">
+    <h2 class="title is-3">Your Profile</h2>
     <div v-if="!isLoading">
 
       <form @submit.prevent="save">
@@ -112,6 +113,6 @@ export default {
 <style scoped>
 .profile-container {
   max-width: 450px;
-  margin: 0 auto;
+  margin: 2em auto;
 }
 </style>

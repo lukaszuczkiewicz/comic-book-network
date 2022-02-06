@@ -1,6 +1,6 @@
 <template>
   <div class="comic-series-container">
-    <h2 class="title is-3">Comic Series:</h2>
+    <h2 class="title is-3">Comic Series</h2>
     <ul class="series-list">
       <li v-for="series of comicSeries" :key="series.id">
         <div class="subtitle is-5 comic-row">

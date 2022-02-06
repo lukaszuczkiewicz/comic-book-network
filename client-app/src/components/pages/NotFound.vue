@@ -1,11 +1,7 @@
 <template>
-  <n-result
-    status="404"
-    title="404 Not Found"
-    description="Hmmm. Nothing is here"
-  >
-    <template #footer>
-      <n-button>Find Something Funny</n-button>
-    </template>
-  </n-result>
+  <div>
+    <img :src="require('../../assets/notfound.png')" alt="404 not found">
+    <div class="title">Hmmm... There is nothing here.</div>
+    <router-link to="/">Go to homepage</router-link>
+  </div>
 </template>

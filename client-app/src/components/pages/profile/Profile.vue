@@ -113,6 +113,6 @@ export default {
 <style scoped>
 .profile-container {
   max-width: 450px;
-  margin: 2em auto;
+  margin: 0 auto;
 }
 </style>

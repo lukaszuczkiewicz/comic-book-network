@@ -26,7 +26,7 @@
               class="avatar"
             />
           </div>
-          <span>{{username}}</span>
+          <span>{{ username }}</span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true"
@@ -38,72 +38,82 @@
           >
             <path d="M32 62L62 2H2z" fill="currentColor" />
           </svg>
-        <div class="nav-dropdown">
-          <router-link to="/profile" class="navbar-item">Profile</router-link>
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://github.com/"
-            class="navbar-item"
-            >Help</a
-          >
-          <hr class="navbar-divider" />
-          <a class="navbar-item" @click="logout">Logout </a>
-        </div>
+          <div class="nav-dropdown">
+            <router-link to="/profile" class="navbar-item">Profile</router-link>
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://github.com/"
+              class="navbar-item"
+              >Help</a
+            >
+            <hr class="navbar-divider" />
+            <a class="navbar-item" @click="logout">Logout </a>
+          </div>
         </div>
 
         <div class="hamburger-menu">
-          <input id="menu__toggle" ref="menu__toggle" type="checkbox" />
-          <label class="menu__btn" for="menu__toggle">
-            <span></span>
-          </label>
+          <button
+            id="menu__toggle"
+            @click="isHamburgerOn = !isHamburgerOn"
+            :class="isHamburgerOn ? 'open' : ''"
+          >
+            <div class="menu__btn">
+              <span></span>
+            </div>
+          </button>
 
-          <ul class="menu__box">
-            <li>
-              <router-link
-                to="/dashboard"
-                class="menu__item navbar-item"
-                @click="closeMenu()"
-                >Dashboard</router-link
-              >
-            </li>
-            <li>
-              <router-link
-                to="/comics"
-                class="menu__item navbar-item"
-                @click="closeMenu()"
-                >Browse Comics</router-link
-              >
-            </li>
-            <li>
-              <router-link
-                to="/lists/collection"
-                class="menu__item navbar-item"
-                @click="closeMenu()"
-                >My Lists</router-link
-              >
-            </li>
-            <li>
-              <router-link
-                to="/profile"
-                class="menu__item navbar-item"
-                @click="closeMenu()"
-                >Profile</router-link
-              >
-            </li>
-            <li>
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href="https://github.com/"
-                class="menu__item navbar-item"
-                >Help</a
-              >
-            </li>
-            <li>
-              <a class="menu__item navbar-item" @click="logout()">Logout</a>
-            </li>
-          </ul>
+          <teleport to="#app">
+            <ul
+              class="menu__box"
+              :class="isHamburgerOn ? 'menu__box-open' : 'menu__box-closed'"
+            >
+              <li>
+                <router-link
+                  to="/dashboard"
+                  class="menu__item navbar-item"
+                  @click="closeMenu()"
+                  >Dashboard</router-link
+                >
+              </li>
+              <li>
+                <router-link
+                  to="/comics"
+                  class="menu__item navbar-item"
+                  @click="closeMenu()"
+                  >Browse Comics</router-link
+                >
+              </li>
+              <li>
+                <router-link
+                  to="/lists/collection"
+                  class="menu__item navbar-item"
+                  @click="closeMenu()"
+                  >My Lists</router-link
+                >
+              </li>
+              <li>
+                <router-link
+                  to="/profile"
+                  class="menu__item navbar-item"
+                  @click="closeMenu()"
+                  >Profile</router-link
+                >
+              </li>
+              <li>
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://github.com/"
+                  class="menu__item navbar-item"
+                  >Help</a
+                >
+              </li>
+              <li>
+                <a class="menu__item navbar-item" @click="logout()">Logout</a>
+              </li>
+            </ul>
+          </teleport>
         </div>
       </div>
     </nav>
@@ -116,7 +126,7 @@ export default {
     return {
       isMenuOpen: false,
       username: localStorage.getItem('username'),
-      isHamburgerOn: false
+      isHamburgerOn: false,
     };
   },
   methods: {
@@ -125,7 +135,7 @@ export default {
       this.$router.replace('/auth');
     },
     closeMenu() {
-      this.$refs['menu__toggle'].checked = false;
+      this.isHamburgerOn = false;
     },
   },
 };
@@ -196,29 +206,32 @@ export default {
 }
 
 #menu__toggle {
-  opacity: 0;
+  background: transparent;
+  border: none;
+  height: 100%;
+  width: 5em;
+  cursor: pointer;
 }
-#menu__toggle:checked + .menu__btn > span {
+.open .menu__btn > span {
   transform: rotate(45deg);
 }
-#menu__toggle:checked + .menu__btn > span::before {
+.open .menu__btn > span::before {
   top: 0;
   transform: rotate(0deg);
 }
-#menu__toggle:checked + .menu__btn > span::after {
+.open .menu__btn > span::after {
   top: 0;
   transform: rotate(90deg);
 }
-#menu__toggle:checked ~ .menu__box {
+.open .menu__box {
   left: 0 !important;
 }
 .menu__btn {
-  position: fixed;
+  position: absolute;
   top: 20px;
   right: 20px;
   width: 26px;
   height: 26px;
-  height: 100%;
   cursor: pointer;
   z-index: 150;
 }
@@ -241,19 +254,7 @@ export default {
   top: 8px;
 }
 .menu__box {
-  display: block;
-  position: fixed;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 80px 0;
-  list-style: none;
-  background-color: #eceff1;
-  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
-  transition-duration: 0.25s;
-  z-index: 100;
+  display: none;
 }
 .menu__item {
   display: block;
@@ -287,6 +288,27 @@ export default {
   }
   .hamburger-menu {
     display: block;
+  }
+  .menu__box {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100%;
+    margin: 0;
+    padding: 80px 0;
+    list-style: none;
+    background-color: #eceff1;
+    transition-duration: 0.25s;
+    z-index: 100;
+  }
+  .menu__box-closed {
+  transform: translateX(-100%);
+  }
+  .menu__box-open {
+    transition: translateX(100vw);
   }
 }
 </style>

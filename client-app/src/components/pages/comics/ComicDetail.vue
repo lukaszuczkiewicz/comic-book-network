@@ -259,7 +259,7 @@ export default {
 <style scoped>
 .main-container {
   max-width: 1000px;
-  margin: 2em auto 0 auto;
+  margin: 0 auto;
   padding: 0 1em 1em;
 }
 .info-header {

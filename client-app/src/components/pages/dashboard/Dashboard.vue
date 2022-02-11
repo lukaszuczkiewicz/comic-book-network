@@ -1,5 +1,5 @@
 <template>
-  <main class="main">
+  <main>
     <list-counters></list-counters>
     <new-comics></new-comics>
     <new-comments></new-comments>
@@ -16,20 +16,6 @@ export default {
     NewComics,
     NewComments,
     ListCounters
-  },
-  data() {
-    return {
-      collected: '0',
-      read: '0',
-      rated: '0',
-      wishlist: '0',
-    };
-  },
+  }
 };
 </script>
-
-<style scoped>
-.main {
-  padding: 1rem;
-}
-</style>

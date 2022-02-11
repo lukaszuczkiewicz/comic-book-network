@@ -18,6 +18,7 @@
         :isInWishlist="comic.isInWishlist"
       ></comic-card>
     </div>
+    <main-loading-spinner v-else></main-loading-spinner>
   </section>
 </template>
 
@@ -26,7 +27,7 @@ import ComicCard from './ComicCard.vue';
 
 export default {
   components: {
-    ComicCard,
+    ComicCard
   },
   props: {
     title: {

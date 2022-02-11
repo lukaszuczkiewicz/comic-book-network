@@ -2,7 +2,6 @@
   <div class="profile-container">
     <h2 class="title is-3">Your Profile</h2>
     <div v-if="!isLoading">
-
       <form @submit.prevent="save">
 
         <div class="field">
@@ -27,8 +26,8 @@
       
         <button type="submit" class="button is-link">Save Changes</button>
       </form>
-
     </div>
+    <main-loading-spinner v-else></main-loading-spinner>
   </div>
 </template>
 

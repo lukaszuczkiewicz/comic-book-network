@@ -99,6 +99,7 @@
 
     <comic-comments></comic-comments>
   </div>
+  <main-loading-spinner v-else></main-loading-spinner>
 </template>
 
 <script>

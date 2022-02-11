@@ -2,7 +2,7 @@
   <section class="comment-container">
     <h3 class="title is-3">Latest comments</h3>
 
-    <div class="comments">
+    <div class="comments" v-if="!isLoading">
       <comment
         v-for="c in comments"
         :key="c.Id"
@@ -17,6 +17,7 @@
       >
       </comment>
     </div>
+    <main-loading-spinner v-else></main-loading-spinner>
   </section>
 </template>
 

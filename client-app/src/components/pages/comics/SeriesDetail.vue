@@ -12,6 +12,7 @@
     </div>
     <comic-grid title="Comics" :listType="'from-series/' + this.$route.params.id"></comic-grid>
   </div>
+  <main-loading-spinner v-else></main-loading-spinner>
 </template>
 
 <script>

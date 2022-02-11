@@ -1,7 +1,7 @@
 <template>
   <div class="comic-series-container">
     <h2 class="title is-3">Comic Series</h2>
-    <ul class="series-list">
+    <ul class="series-list" v-if="!isLoading">
       <li v-for="series of comicSeries" :key="series.id">
         <div class="subtitle is-5 comic-row">
           <router-link :to="'/comics/'+series.id">
@@ -15,6 +15,7 @@
         </div>
       </li>
     </ul>
+    <main-loading-spinner v-else></main-loading-spinner>
   </div>
 </template>
 
@@ -23,6 +24,7 @@ export default {
   data() {
     return {
       comicSeries: [],
+      isLoading: true
     };
   },
   created() {

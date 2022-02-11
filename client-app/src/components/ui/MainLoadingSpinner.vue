@@ -1,0 +1,24 @@
+<template>
+  <div class="bars"></div>
+</template>
+
+<style scoped>
+.bars {
+  width:45px;
+  height:40px;
+  margin: 0 auto;
+  --c:linear-gradient(rgb(165, 165, 165) 0 0);
+  background: 
+    var(--c) 0%   50%,
+    var(--c) 50%  50%,
+    var(--c) 100% 50%;
+  background-size:9px 100%;
+  background-repeat: no-repeat;
+  animation:b1 1s infinite linear;
+}
+@keyframes b1 {
+    33%{background-size:9px 10% ,9px 100%,9px 100%}
+    50%{background-size:9px 100%,9px 10% ,9px 100%}
+    66%{background-size:9px 100%,9px 100%,9px 10% }
+}
+</style>

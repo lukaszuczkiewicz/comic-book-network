@@ -12,7 +12,7 @@ import Comics from '../components/pages/comics/Comics.vue';
 import SeriesDetail from '../components/pages/comics/SeriesDetail.vue';
 import ComicDetail from '../components/pages/comics/ComicDetail.vue';
 import NotFound from '../components/pages/NotFound.vue';
-// import store from '../store/index.js';
+import store from '../store/index.js';
 
 const routes = [
   {
@@ -24,26 +24,34 @@ const routes = [
     component: Auth,
     meta: { requiresUnauth: true }
   },
-  { path: '/dashboard', component: Dashboard },
+  { path: '/dashboard',
+    component: Dashboard,
+    meta: { requiresAuth: true }
+  },
   {
     path: '/profile',
-    component: Profile
+    component: Profile,
+    meta: { requiresAuth: true }
   },
   {
     path: '/comics',
-    component: Comics
+    component: Comics,
+    meta: { requiresAuth: true }
   },
   {
     path: '/comics/:id',
-    component: SeriesDetail
+    component: SeriesDetail,
+    meta: { requiresAuth: true }
   },
   {
     path: '/comics/:id/:id2',
-    component: ComicDetail
+    component: ComicDetail,
+    meta: { requiresAuth: true }
   },
   {
     path: '/lists',
     component: List,
+    meta: { requiresAuth: true },
     children: [
       { path: 'collection', component: Collection },
       { path: 'rated', component: Rated },
@@ -67,14 +75,16 @@ const router = createRouter({
   routes,
 });
 
-// router.beforeEach(function(to, _, next) {
-//   if (to.meta.requiresAuth && !store.getters.isAuthenticated) {
-//     next('/auth');
-//   // } else if (to.meta.requiresUnauth && store.getters.isAuthenticated) {
-//   //   next('/dashboard');
-//   } else {
-//     next();
-//   }
-// });
+router.beforeEach(function(to, _, next) {
+  if (to.meta.requiresAuth && !localStorage.getItem('token')) {
+    next('/auth');
+  } else if (to.meta.requiresUnauth){
+    store.dispatch('logout');
+    next();
+  }
+  else {
+    next();
+  }
+});
 
 export default router;

@@ -28,7 +28,7 @@ namespace API.Controllers
         [HttpGet("latest")]
         public async Task<ActionResult<IEnumerable<ComicCardDto>>> GetLatestComics()
         {
-            var userId = await GetUserId();
+            var userId = User.GetUserId();
 
             var latestComics = await _comicRepository.GetLatestComicsAsync(userId);
 
@@ -44,7 +44,7 @@ namespace API.Controllers
         [HttpGet("social/{id}")]
         public async Task<ActionResult<ComicSocialDto>> GetComicDetailSocial(int id)
         {
-            var userId = await GetUserId();
+            var userId = User.GetUserId();
 
             var comic = await _comicRepository.GetComicAsync(id);
             if (comic == null) return BadRequest("Comic does not exist");
@@ -68,7 +68,7 @@ namespace API.Controllers
         {
             if (rateToAddDto.Rate > 5) return BadRequest("Rate value cannot be larger than 5");
 
-            var userId = await GetUserId();
+            var userId = User.GetUserId();
             var comic = await _comicRepository.GetComicAsync(rateToAddDto.ComicId);
             if (comic == null) return BadRequest("Comic does not exist");
 
@@ -111,7 +111,7 @@ namespace API.Controllers
         [HttpPost("add-to-collection")]
         public async Task<ActionResult> AddToCollection(AddToListDto addToListDto)
         {
-            var userId = await GetUserId();
+            var userId = User.GetUserId();
 
             var comic = await _comicRepository.GetComicAsync(addToListDto.ComicId);
             if (comic == null) return BadRequest("Comic does not exist");
@@ -145,7 +145,7 @@ namespace API.Controllers
         [HttpPost("add-to-read")]
         public async Task<ActionResult> AddToRead(AddToListDto addToListDto)
         {
-            var userId = await GetUserId();
+            var userId = User.GetUserId();
 
             var comic = await _comicRepository.GetComicAsync(addToListDto.ComicId);
             if (comic == null) return BadRequest("Comic does not exist");
@@ -178,7 +178,7 @@ namespace API.Controllers
         [HttpPost("add-to-wishlist")]
         public async Task<ActionResult> AddToWishlist(AddToListDto addToListDto)
         {
-            var userId = await GetUserId();
+            var userId = User.GetUserId();
 
             var comic = await _comicRepository.GetComicAsync(addToListDto.ComicId);
             if (comic == null) return BadRequest("Comic does not exist");
@@ -212,7 +212,7 @@ namespace API.Controllers
         [HttpGet("rated")]
         public async Task<ActionResult<IEnumerable<ComicCardDto>>> GetRatedComics()
         {
-            var userId = await GetUserId();
+            var userId = User.GetUserId();
             var comics = await _comicRepository.GetRatedComicsAsync(userId);
 
             return Ok(comics);
@@ -221,7 +221,7 @@ namespace API.Controllers
         [HttpGet("read")]
         public async Task<ActionResult<IEnumerable<ComicCardDto>>> GetReadComics()
         {
-            var userId = await GetUserId();
+            var userId = User.GetUserId();
             var comics = await _comicRepository.GetReadComicsAsync(userId);
 
             return Ok(comics);
@@ -230,7 +230,7 @@ namespace API.Controllers
         [HttpGet("collection")]
         public async Task<ActionResult<IEnumerable<ComicCardDto>>> GetComicsFromCollection()
         {
-            var userId = await GetUserId();
+            var userId = User.GetUserId();
             var comics = await _comicRepository.GetComicsFromCollectionAsync(userId);
 
             return Ok(comics);
@@ -239,7 +239,7 @@ namespace API.Controllers
         [HttpGet("wishlist")]
         public async Task<ActionResult<IEnumerable<ComicCardDto>>> GetComicsFromWishlist()
         {
-            var userId = await GetUserId();
+            var userId = User.GetUserId();
             var comics = await _comicRepository.GetComicsFromWishlistAsync(userId);
 
             return Ok(comics);
@@ -248,17 +248,10 @@ namespace API.Controllers
         [HttpGet("from-series/{id}")]
         public async Task<ActionResult<IEnumerable<ComicCardDto>>> GetComicsFromSeries(int id)
         {
-            var userId = await GetUserId();
+            var userId = User.GetUserId();
             var comics = await _comicRepository.GetComicsFromSeriesAsync(userId, id);
 
             return Ok(comics);
-        }
-
-        private async Task<int> GetUserId()
-        {
-            var username = User.GetUsername();
-            var user = await _userRepository.GetUserByUsernameAsync(username);
-            return user.Id;
         }
     }
 }

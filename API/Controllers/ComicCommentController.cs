@@ -29,12 +29,7 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult> AddCommentToComic(ComicCommentToAddDto commentToAdd)
         {
-            var username = User.GetUsername();
-
-            var user = await _userRepository.GetUserByUsernameAsync(username);
-
-            var userId = user.Id;
-
+            var userId = User.GetUserId();
 
             var comic = await _comicRepository.GetComicAsync(commentToAdd.ComicId);
 
@@ -73,9 +68,7 @@ namespace API.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteComment(int id)
         {
-            var username = User.GetUsername();
-            var user = await _userRepository.GetUserByUsernameAsync(username);
-            var userId = user.Id;
+            var userId = User.GetUserId();
 
             var comment = await _commentRepository.GetComicComment(id);
 

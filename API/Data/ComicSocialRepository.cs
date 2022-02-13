@@ -49,11 +49,6 @@ namespace API.Data
             return null;
         }
 
-        public async Task<bool> SaveAllAsync()
-        {
-            return await _context.SaveChangesAsync() > 0;
-        }
-
         public void Update(ComicSocial comicSocial)
         {
             _context.Entry(comicSocial).State = EntityState.Modified;

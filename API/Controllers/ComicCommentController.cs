@@ -11,19 +11,11 @@ namespace API.Controllers
     [Authorize]
     public class ComicCommentController : BaseApiController
     {
-        private readonly IComicCommentRepository _commentRepository;
-        private readonly IUserRepository _userRepository;
-        private readonly IComicRepository _comicRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        private readonly IMapper _mapper;
-
-        public ComicCommentController(IComicCommentRepository commentRepository,
-            IMapper mapper, IUserRepository userRepository, IComicRepository comicRepository)
+        public ComicCommentController(IUnitOfWork unitOfWork)
         {
-            _commentRepository = commentRepository;
-            _userRepository = userRepository;
-            _comicRepository = comicRepository;
-            _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
 
         [HttpPost]
@@ -31,7 +23,7 @@ namespace API.Controllers
         {
             var userId = User.GetUserId();
 
-            var comic = await _comicRepository.GetComicAsync(commentToAdd.ComicId);
+            var comic = await _unitOfWork.ComicRepository.GetComicAsync(commentToAdd.ComicId);
 
             if (comic == null) return BadRequest("Comic does not exist");
 
@@ -42,9 +34,9 @@ namespace API.Controllers
                 AppUserId = userId,
                 ComicId = commentToAdd.ComicId
             };
-            _commentRepository.AddComicComment(newComment);
+            _unitOfWork.ComicCommentRepository.AddComicComment(newComment);
 
-            if (await _commentRepository.SaveAllAsync()) return Ok();
+            if (await _unitOfWork.Complete()) return Ok();
 
             return BadRequest("Failed to add the comment");
         }
@@ -52,7 +44,7 @@ namespace API.Controllers
         [HttpGet("{comicId}")]
         public async Task<ActionResult> GetComicComments(int comicId)
         {
-            var comments = await _commentRepository.GetComicCommentsAsync(comicId);
+            var comments = await _unitOfWork.ComicCommentRepository.GetComicCommentsAsync(comicId);
 
             return Ok(comments);
         }
@@ -60,7 +52,7 @@ namespace API.Controllers
         [HttpGet("latest")]
         public async Task<ActionResult> GetLatestComments()
         {
-            var comments = await _commentRepository.GetLatestCommentsAsync();
+            var comments = await _unitOfWork.ComicCommentRepository.GetLatestCommentsAsync();
 
             return Ok(comments);
         }
@@ -70,7 +62,7 @@ namespace API.Controllers
         {
             var userId = User.GetUserId();
 
-            var comment = await _commentRepository.GetComicComment(id);
+            var comment = await _unitOfWork.ComicCommentRepository.GetComicComment(id);
 
             if (comment == null)
                 return BadRequest("Comment does not exist.");
@@ -78,9 +70,9 @@ namespace API.Controllers
             if (comment.AppUserId != userId)
                 return Unauthorized();
 
-            _commentRepository.DeleteComicComment(comment);
+            _unitOfWork.ComicCommentRepository.DeleteComicComment(comment);
 
-            if (await _commentRepository.SaveAllAsync()) return Ok();
+            if (await _unitOfWork.Complete()) return Ok();
 
             return BadRequest("Problem deleting the comment");
         }

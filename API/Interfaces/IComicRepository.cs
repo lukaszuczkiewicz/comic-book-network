@@ -6,7 +6,6 @@ namespace API.Interfaces
     public interface IComicRepository
     {
         void Update(Comic comic);
-        Task<bool> SaveAllAsync();
         Task<IEnumerable<ComicCardDto>> GetLatestComicsAsync(int userId);
         Task<IEnumerable<ComicCardDto>> GetRatedComicsAsync(int userId);
         Task<IEnumerable<ComicCardDto>> GetReadComicsAsync(int userId);

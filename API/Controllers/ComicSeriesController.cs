@@ -9,20 +9,17 @@ namespace API.Controllers
     [Authorize]
     public class ComicSeriesController : BaseApiController
     {
-        private readonly IComicSeriesRepository _comicSeriesRepository;
-        private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public ComicSeriesController(IComicSeriesRepository comicSeriesRepository,
-            IMapper mapper)
+        public ComicSeriesController(IUnitOfWork unitOfWork)
         {
-            _comicSeriesRepository = comicSeriesRepository;
-            _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ComicSeriesDto>>> GetComicSeries()
         {
-            var comicSeries = await _comicSeriesRepository.GetAllComicSeriesAsync();
+            var comicSeries = await _unitOfWork.ComicSeriesRepository.GetAllComicSeriesAsync();
 
             return Ok(comicSeries);
         }
@@ -30,7 +27,7 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<ComicSeriesDto>> GetComicSeriesDetail(int id)
         {
-            return await _comicSeriesRepository.GetComicSeriesByIdAsync(id);
+            return await _unitOfWork.ComicSeriesRepository.GetComicSeriesByIdAsync(id);
         }
     }
 }

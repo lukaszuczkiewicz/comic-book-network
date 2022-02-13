@@ -11,18 +11,11 @@ namespace API.Controllers
     [Authorize]
     public class ComicController : BaseApiController
     {
-        private readonly IComicRepository _comicRepository;
-        private readonly IUserRepository _userRepository;
-        private readonly IComicSocialRepository _comicSocialRepository;
-        private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public ComicController(IComicRepository comicRepository, IUserRepository userRepository, IComicSocialRepository comicSocialRepository,
-            IMapper mapper)
+        public ComicController(IUnitOfWork unitOfWork)
         {
-            _comicRepository = comicRepository;
-            _userRepository = userRepository;
-            _comicSocialRepository = comicSocialRepository;
-            _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
 
         [HttpGet("latest")]
@@ -30,7 +23,7 @@ namespace API.Controllers
         {
             var userId = User.GetUserId();
 
-            var latestComics = await _comicRepository.GetLatestComicsAsync(userId);
+            var latestComics = await _unitOfWork.ComicRepository.GetLatestComicsAsync(userId);
 
             return Ok(latestComics);
         }
@@ -38,7 +31,7 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<ComicDetailDto>> GetComicDetail(int id)
         {
-            return await _comicRepository.GetComicDetailAsync(id);
+            return await _unitOfWork.ComicRepository.GetComicDetailAsync(id);
         }
 
         [HttpGet("social/{id}")]
@@ -46,12 +39,12 @@ namespace API.Controllers
         {
             var userId = User.GetUserId();
 
-            var comic = await _comicRepository.GetComicAsync(id);
+            var comic = await _unitOfWork.ComicRepository.GetComicAsync(id);
             if (comic == null) return BadRequest("Comic does not exist");
 
-            var averageRating = await _comicSocialRepository.GetAverageRatingAsync(id);
+            var averageRating = await _unitOfWork.ComicSocialRepository.GetAverageRatingAsync(id);
 
-            var comicSocial = await _comicSocialRepository.GetComicSocialDataAsync(id, userId);
+            var comicSocial = await _unitOfWork.ComicSocialRepository.GetComicSocialDataAsync(id, userId);
 
             if (comicSocial == null)
             {
@@ -69,10 +62,10 @@ namespace API.Controllers
             if (rateToAddDto.Rate > 5) return BadRequest("Rate value cannot be larger than 5");
 
             var userId = User.GetUserId();
-            var comic = await _comicRepository.GetComicAsync(rateToAddDto.ComicId);
+            var comic = await _unitOfWork.ComicRepository.GetComicAsync(rateToAddDto.ComicId);
             if (comic == null) return BadRequest("Comic does not exist");
 
-            var existingComicSocial = await _comicSocialRepository.GetComicSocialAsync(rateToAddDto.ComicId, userId);
+            var existingComicSocial = await _unitOfWork.ComicSocialRepository.GetComicSocialAsync(rateToAddDto.ComicId, userId);
 
             if (existingComicSocial == null && rateToAddDto.Rate < 1) //don't create an entry
             {
@@ -88,7 +81,7 @@ namespace API.Controllers
                     IsRead = true
                 };
 
-                _comicSocialRepository.AddComicSocial(comicSocial);
+                _unitOfWork.ComicSocialRepository.AddComicSocial(comicSocial);
             }
             else //comic social already exists for this user and comic - update it
             {
@@ -99,11 +92,10 @@ namespace API.Controllers
                     existingComicSocial.IsRead = true;
                 }
 
-                _comicSocialRepository.Update(existingComicSocial);
+                _unitOfWork.ComicSocialRepository.Update(existingComicSocial);
             }
 
-
-            if (await _comicSocialRepository.SaveAllAsync()) return Ok();
+            if (await _unitOfWork.Complete()) return Ok();
 
             return BadRequest("Failed to add the rate");
         }
@@ -113,17 +105,17 @@ namespace API.Controllers
         {
             var userId = User.GetUserId();
 
-            var comic = await _comicRepository.GetComicAsync(addToListDto.ComicId);
+            var comic = await _unitOfWork.ComicRepository.GetComicAsync(addToListDto.ComicId);
             if (comic == null) return BadRequest("Comic does not exist");
 
-            var existingComicSocial = await _comicSocialRepository.GetComicSocialAsync(addToListDto.ComicId, userId);
+            var existingComicSocial = await _unitOfWork.ComicSocialRepository.GetComicSocialAsync(addToListDto.ComicId, userId);
 
             if (existingComicSocial != null) //comic social already exists for this user and comic - update it
             {
                 existingComicSocial.IsInCollection = !existingComicSocial.IsInCollection;
                 existingComicSocial.IsInWishlist = false;
 
-                _comicSocialRepository.Update(existingComicSocial);
+                _unitOfWork.ComicSocialRepository.Update(existingComicSocial);
             }
             else //comic social doesn't exist - create a new one
             {
@@ -134,10 +126,10 @@ namespace API.Controllers
                     IsInCollection = true
                 };
 
-                _comicSocialRepository.AddComicSocial(comicSocial);
+                _unitOfWork.ComicSocialRepository.AddComicSocial(comicSocial);
             }
 
-            if (await _comicSocialRepository.SaveAllAsync()) return Ok();
+            if (await _unitOfWork.Complete()) return Ok();
 
             return BadRequest("Failed to add the rate");
         }
@@ -147,16 +139,16 @@ namespace API.Controllers
         {
             var userId = User.GetUserId();
 
-            var comic = await _comicRepository.GetComicAsync(addToListDto.ComicId);
+            var comic = await _unitOfWork.ComicRepository.GetComicAsync(addToListDto.ComicId);
             if (comic == null) return BadRequest("Comic does not exist");
 
-            var existingComicSocial = await _comicSocialRepository.GetComicSocialAsync(addToListDto.ComicId, userId);
+            var existingComicSocial = await _unitOfWork.ComicSocialRepository.GetComicSocialAsync(addToListDto.ComicId, userId);
 
             if (existingComicSocial != null) //comic social already exists for this user and comic - update it
             {
                 existingComicSocial.IsRead = !existingComicSocial.IsRead;
 
-                _comicSocialRepository.Update(existingComicSocial);
+                _unitOfWork.ComicSocialRepository.Update(existingComicSocial);
             }
             else //comic social doesn't exist - create a new one
             {
@@ -167,10 +159,10 @@ namespace API.Controllers
                     IsRead = true
                 };
 
-                _comicSocialRepository.AddComicSocial(comicSocial);
+                _unitOfWork.ComicSocialRepository.AddComicSocial(comicSocial);
             }
 
-            if (await _comicSocialRepository.SaveAllAsync()) return Ok();
+            if (await _unitOfWork.Complete()) return Ok();
 
             return BadRequest("Failed to add the rate");
         }
@@ -180,17 +172,17 @@ namespace API.Controllers
         {
             var userId = User.GetUserId();
 
-            var comic = await _comicRepository.GetComicAsync(addToListDto.ComicId);
+            var comic = await _unitOfWork.ComicRepository.GetComicAsync(addToListDto.ComicId);
             if (comic == null) return BadRequest("Comic does not exist");
 
-            var existingComicSocial = await _comicSocialRepository.GetComicSocialAsync(addToListDto.ComicId, userId);
+            var existingComicSocial = await _unitOfWork.ComicSocialRepository.GetComicSocialAsync(addToListDto.ComicId, userId);
 
             if (existingComicSocial != null) //comic social already exists for this user and comic - update it
             {
                 existingComicSocial.IsInWishlist = !existingComicSocial.IsInWishlist;
                 existingComicSocial.IsInCollection = false;
 
-                _comicSocialRepository.Update(existingComicSocial);
+                _unitOfWork.ComicSocialRepository.Update(existingComicSocial);
             }
             else //comic social doesn't exist - create a new one
             {
@@ -201,10 +193,10 @@ namespace API.Controllers
                     IsInWishlist = true
                 };
 
-                _comicSocialRepository.AddComicSocial(comicSocial);
+                _unitOfWork.ComicSocialRepository.AddComicSocial(comicSocial);
             }
 
-            if (await _comicSocialRepository.SaveAllAsync()) return Ok();
+            if (await _unitOfWork.Complete()) return Ok();
 
             return BadRequest("Failed to add the rate");
         }
@@ -213,7 +205,7 @@ namespace API.Controllers
         public async Task<ActionResult<IEnumerable<ComicCardDto>>> GetRatedComics()
         {
             var userId = User.GetUserId();
-            var comics = await _comicRepository.GetRatedComicsAsync(userId);
+            var comics = await _unitOfWork.ComicRepository.GetRatedComicsAsync(userId);
 
             return Ok(comics);
         }
@@ -222,7 +214,7 @@ namespace API.Controllers
         public async Task<ActionResult<IEnumerable<ComicCardDto>>> GetReadComics()
         {
             var userId = User.GetUserId();
-            var comics = await _comicRepository.GetReadComicsAsync(userId);
+            var comics = await _unitOfWork.ComicRepository.GetReadComicsAsync(userId);
 
             return Ok(comics);
         }
@@ -231,7 +223,7 @@ namespace API.Controllers
         public async Task<ActionResult<IEnumerable<ComicCardDto>>> GetComicsFromCollection()
         {
             var userId = User.GetUserId();
-            var comics = await _comicRepository.GetComicsFromCollectionAsync(userId);
+            var comics = await _unitOfWork.ComicRepository.GetComicsFromCollectionAsync(userId);
 
             return Ok(comics);
         }
@@ -240,7 +232,7 @@ namespace API.Controllers
         public async Task<ActionResult<IEnumerable<ComicCardDto>>> GetComicsFromWishlist()
         {
             var userId = User.GetUserId();
-            var comics = await _comicRepository.GetComicsFromWishlistAsync(userId);
+            var comics = await _unitOfWork.ComicRepository.GetComicsFromWishlistAsync(userId);
 
             return Ok(comics);
         }
@@ -249,7 +241,7 @@ namespace API.Controllers
         public async Task<ActionResult<IEnumerable<ComicCardDto>>> GetComicsFromSeries(int id)
         {
             var userId = User.GetUserId();
-            var comics = await _comicRepository.GetComicsFromSeriesAsync(userId, id);
+            var comics = await _unitOfWork.ComicRepository.GetComicsFromSeriesAsync(userId, id);
 
             return Ok(comics);
         }

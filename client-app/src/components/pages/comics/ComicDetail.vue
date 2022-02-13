@@ -92,7 +92,7 @@
       </div>
       <img
         class="comic-img"
-        :src="require(`../../../assets/covers/` + comic.photo)"
+        :src="`https://res.cloudinary.com/dwvenbraf/image/upload/v1644712521/` + comic.photo"
         alt="comic cover"
       />
     </div>

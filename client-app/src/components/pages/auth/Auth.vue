@@ -69,7 +69,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url('../../../assets/authBackground.jpg');
+  background-image: url('https://res.cloudinary.com/dwvenbraf/image/upload/v1644717345/authBackground_uzaurj.jpg');
 }
 .auth-card {
   width: 500px;

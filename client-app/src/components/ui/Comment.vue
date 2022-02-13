@@ -18,7 +18,7 @@
       </div>
       <img
         v-if="coverTitle"
-        :src="require(`../../assets/covers/${coverTitle}`)"
+        :src="`https://res.cloudinary.com/dwvenbraf/image/upload/v1644712521/${coverTitle}`"
         alt="Comic Cover"
         class="comic-cover"
       />

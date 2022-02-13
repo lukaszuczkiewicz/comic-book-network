@@ -3,7 +3,7 @@
     <router-link :to="'/comics/1/' + comicId" class="link">
       <img
         class="comic-img"
-        :src="require(`../../assets/covers/${coverTitle}`)"
+        :src="`https://res.cloudinary.com/dwvenbraf/image/upload/v1644712521/${coverTitle}`"
         :alt="coverAlt"
       />
     </router-link>

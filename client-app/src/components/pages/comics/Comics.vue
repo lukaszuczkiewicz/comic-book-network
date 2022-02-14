@@ -35,7 +35,7 @@ export default {
       this.isLoading = true;
 
       try {
-        const response = await fetch('https://localhost:5001/api/comicseries', {
+        const response = await fetch(`${process.env.VUE_APP_ROOT_API}/comicseries`, {
           headers: {
             Authorization: 'Bearer ' + localStorage.getItem('token'),
           },

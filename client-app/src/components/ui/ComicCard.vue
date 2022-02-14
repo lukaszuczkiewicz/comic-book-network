@@ -90,7 +90,7 @@ export default {
     async addToList(listName) {
       try {
         const response = await fetch(
-          `https://localhost:5001/api/comic/add-to-${listName}`,
+          `${process.env.VUE_APP_ROOT_API}/comic/add-to-${listName}`,
           {
             method: 'POST',
             headers: {
@@ -117,7 +117,7 @@ export default {
     async loadComicSocial() {
       try {
         const response = await fetch(
-          `https://localhost:5001/api/comic/social/${this.comicId}`,
+          `${process.env.VUE_APP_ROOT_API}/comic/social/${this.comicId}`,
           {
             headers: {
               Authorization: 'Bearer ' + localStorage.getItem('token'),

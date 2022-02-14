@@ -136,7 +136,7 @@ export default {
 
       try {
         const response = await fetch(
-          `https://localhost:5001/api/comic/${this.$route.params.id2}`,
+          `${process.env.VUE_APP_ROOT_API}/comic/${this.$route.params.id2}`,
           {
             headers: {
               Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -172,7 +172,7 @@ export default {
     async loadComicSocial() {
       try {
         const response = await fetch(
-          `https://localhost:5001/api/comic/social/${this.$route.params.id2}`,
+          `${process.env.VUE_APP_ROOT_API}/comic/social/${this.$route.params.id2}`,
           {
             headers: {
               Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -200,7 +200,7 @@ export default {
       if (rateNumber < 0 || rateNumber > 5) return;
 
       try {
-        const response = await fetch(`https://localhost:5001/api/comic/rate`, {
+        const response = await fetch(`${process.env.VUE_APP_ROOT_API}/comic/rate`, {
           method: 'POST',
           headers: {
             Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -229,7 +229,7 @@ export default {
     async addToList(listName) {
       try {
         const response = await fetch(
-          `https://localhost:5001/api/comic/add-to-${listName}`,
+          `${process.env.VUE_APP_ROOT_API}/comic/add-to-${listName}`,
           {
             method: 'POST',
             headers: {

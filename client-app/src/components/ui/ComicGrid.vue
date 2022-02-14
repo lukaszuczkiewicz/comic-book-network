@@ -53,7 +53,7 @@ export default {
       this.isLoading = true;
       try {
         const response = await fetch(
-          `https://localhost:5001/api/comic/${this.listType}`,
+          `${process.env.VUE_APP_ROOT_API}/comic/${this.listType}`,
           {
             headers: {
               Authorization: 'Bearer ' + localStorage.getItem('token'),

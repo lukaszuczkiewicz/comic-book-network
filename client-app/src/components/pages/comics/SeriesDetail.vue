@@ -37,7 +37,7 @@ export default {
 
       try {
         const response = await fetch(
-          'https://localhost:5001/api/comicseries/' + this.$route.params.id,
+          `${process.env.VUE_APP_ROOT_API}/comicseries/` + this.$route.params.id,
           {
             headers: {
               Authorization: 'Bearer ' + localStorage.getItem('token'),

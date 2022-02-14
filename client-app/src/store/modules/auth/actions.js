@@ -16,11 +16,11 @@ export default {
   async auth(context, payload) {
     const mode = payload.mode;
     let url =
-      'https://localhost:5001/api/account/login';
+      `${process.env.VUE_APP_ROOT_API}/account/login`;
 
     if (mode === 'signup') {
       url =
-        'https://localhost:5001/api/account/register';
+        `${process.env.VUE_APP_ROOT_API}/account/register`;
     }
 
     const response = await fetch(url, {

@@ -42,7 +42,7 @@ export default {
       this.isLoading = true;
       try {
         const response = await fetch(
-          'https://localhost:5001/api/comiccomment/latest',
+          `${process.env.VUE_APP_ROOT_API}/comiccomment/latest`,
           {
             headers: {
               Authorization: 'Bearer ' + localStorage.getItem('token'),

@@ -65,7 +65,7 @@ export default {
 
       try {
         const response = await fetch(
-          `https://localhost:5001/api/comiccomment/${this.$route.params.id2}`,
+          `${process.env.VUE_APP_ROOT_API}/comiccomment/${this.$route.params.id2}`,
           {
             headers: {
               Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -103,7 +103,7 @@ export default {
 
       try {
         const response = await fetch(
-          `https://localhost:5001/api/comiccomment`,
+          `${process.env.VUE_APP_ROOT_API}/comiccomment`,
           {
             method: 'POST',
             headers: {

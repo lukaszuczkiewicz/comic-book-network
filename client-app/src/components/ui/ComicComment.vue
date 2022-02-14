@@ -49,7 +49,7 @@ export default {
 
       try {
         const response = await fetch(
-          `https://localhost:5001/api/comiccomment/${this.id}`,
+          `${process.env.VUE_APP_ROOT_API}/comiccomment/${this.id}`,
           {
             method: 'DELETE',
             headers: {

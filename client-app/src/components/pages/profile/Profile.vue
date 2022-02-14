@@ -49,8 +49,7 @@ export default {
       this.isLoading = true;
       try {
         const response = await fetch(
-          'https://localhost:5001/api/users/' +
-            localStorage.getItem('username'),
+          `${process.env.VUE_APP_ROOT_API}/users/${localStorage.getItem('username')}`,
           {
             headers: {
               Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -85,7 +84,7 @@ export default {
 
       try {
         await fetch(
-          'https://localhost:5001/api/users',
+          `${process.env.VUE_APP_ROOT_API}/users`,
           {
             method: 'PUT',
             headers: {

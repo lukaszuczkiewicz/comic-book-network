@@ -43,7 +43,7 @@
             <a
               target="_blank"
               rel="noopener noreferrer"
-              href="https://github.com/"
+              href="https://lukaszuczkiewicz.github.io/comic-book-network-documentation/"
               class="navbar-item"
               >Help</a
             >

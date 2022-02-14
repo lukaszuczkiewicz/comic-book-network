@@ -41,7 +41,7 @@
         <loading-spinner v-else></loading-spinner>
       </button>
     </div>
-    <a target="_blank" rel="noopener noreferrer" href="https://github.com/" class="help">Go to help page</a>
+    <a target="_blank" rel="noopener noreferrer" href="https://lukaszuczkiewicz.github.io/comic-book-network-documentation/#login" class="help">Go to help page</a>
   </form>
 </template>
 

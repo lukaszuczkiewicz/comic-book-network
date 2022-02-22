@@ -16,9 +16,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
 
 namespace API
@@ -61,7 +63,7 @@ namespace API
 
             app.UseRouting();
 
-            app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:8080"));
+            app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:8081"));
 
             app.UseAuthentication();
             app.UseAuthorization();

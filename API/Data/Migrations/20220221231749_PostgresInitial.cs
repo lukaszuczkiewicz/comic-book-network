@@ -1,45 +1,27 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 namespace API.Data.Migrations
 {
-    public partial class FourNewComicEntities : Migration
+    public partial class PostgresInitial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "Country",
-                table: "Users",
-                type: "TEXT",
-                nullable: true);
-
-            migrationBuilder.AddColumn<DateTime>(
-                name: "Created",
-                table: "Users",
-                type: "TEXT",
-                nullable: false,
-                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
-
-            migrationBuilder.AddColumn<string>(
-                name: "Introduction",
-                table: "Users",
-                type: "TEXT",
-                nullable: true);
-
             migrationBuilder.CreateTable(
                 name: "ComicSeries",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    SeriesName = table.Column<string>(type: "TEXT", nullable: true),
-                    Publisher = table.Column<string>(type: "TEXT", nullable: true),
-                    Writer = table.Column<string>(type: "TEXT", nullable: true),
-                    Artist = table.Column<string>(type: "TEXT", nullable: true),
-                    StartYear = table.Column<int>(type: "INTEGER", nullable: false),
-                    EndYear = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    SeriesName = table.Column<string>(type: "text", nullable: true),
+                    Publisher = table.Column<string>(type: "text", nullable: true),
+                    Writer = table.Column<string>(type: "text", nullable: true),
+                    Artist = table.Column<string>(type: "text", nullable: true),
+                    StartYear = table.Column<int>(type: "integer", nullable: false),
+                    EndYear = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -47,17 +29,36 @@ namespace API.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserName = table.Column<string>(type: "text", nullable: true),
+                    PasswordHash = table.Column<byte[]>(type: "bytea", nullable: true),
+                    PasswordSalt = table.Column<byte[]>(type: "bytea", nullable: true),
+                    Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Introduction = table.Column<string>(type: "text", nullable: true),
+                    Country = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Comic",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    PublishDate = table.Column<DateOnly>(type: "TEXT", nullable: false),
-                    IssueNumber = table.Column<int>(type: "INTEGER", nullable: false),
-                    Price = table.Column<decimal>(type: "TEXT", nullable: false),
-                    Photo = table.Column<string>(type: "TEXT", nullable: true),
-                    Description = table.Column<string>(type: "TEXT", nullable: true),
-                    ComicSeriesId = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    PublishDate = table.Column<DateOnly>(type: "date", nullable: false),
+                    IssueNumber = table.Column<int>(type: "integer", nullable: false),
+                    Price = table.Column<decimal>(type: "numeric", nullable: false),
+                    PageCount = table.Column<int>(type: "integer", nullable: false),
+                    Photo = table.Column<string>(type: "text", nullable: true),
+                    Description = table.Column<string>(type: "text", nullable: true),
+                    ComicSeriesId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -74,12 +75,12 @@ namespace API.Data.Migrations
                 name: "ComicComment",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    TextContent = table.Column<int>(type: "INTEGER", nullable: false),
-                    Date = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    ComicId = table.Column<int>(type: "INTEGER", nullable: false),
-                    AppUserId = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    TextContent = table.Column<string>(type: "text", nullable: true),
+                    Date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ComicId = table.Column<int>(type: "integer", nullable: false),
+                    AppUserId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -102,14 +103,14 @@ namespace API.Data.Migrations
                 name: "ComicSocial",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Rate = table.Column<int>(type: "INTEGER", nullable: false),
-                    IsInCollection = table.Column<bool>(type: "INTEGER", nullable: false),
-                    IsRead = table.Column<bool>(type: "INTEGER", nullable: false),
-                    IsInWishlist = table.Column<bool>(type: "INTEGER", nullable: false),
-                    AppUserId = table.Column<int>(type: "INTEGER", nullable: false),
-                    ComicId = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Rate = table.Column<int>(type: "integer", nullable: false),
+                    IsInCollection = table.Column<bool>(type: "boolean", nullable: false),
+                    IsRead = table.Column<bool>(type: "boolean", nullable: false),
+                    IsInWishlist = table.Column<bool>(type: "boolean", nullable: false),
+                    AppUserId = table.Column<int>(type: "integer", nullable: false),
+                    ComicId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -166,19 +167,10 @@ namespace API.Data.Migrations
                 name: "Comic");
 
             migrationBuilder.DropTable(
+                name: "Users");
+
+            migrationBuilder.DropTable(
                 name: "ComicSeries");
-
-            migrationBuilder.DropColumn(
-                name: "Country",
-                table: "Users");
-
-            migrationBuilder.DropColumn(
-                name: "Created",
-                table: "Users");
-
-            migrationBuilder.DropColumn(
-                name: "Introduction",
-                table: "Users");
         }
     }
 }

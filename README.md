@@ -122,7 +122,7 @@ Data - Entity Framework's Migrations, Repository classes, test data (SeedData).
 
 DTOs - Data Transfer Objects
 
-Entities - Database Data objects
+Entities - Database Data objects (database tables are based on them)
 
 Extensions - helping classes e.g for converting datatypes
 
@@ -130,5 +130,5 @@ Interfaces - repository interfaces
 
 wwwroot - the folder where static production frontend files are copied to
 
-
-
+### Database schema
+<img width="552" alt="Untitled (2)" src="https://user-images.githubusercontent.com/39297454/155622796-4f0fa0e5-137b-424c-8803-59a30679c8dd.png">

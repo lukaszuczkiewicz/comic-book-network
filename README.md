@@ -63,3 +63,7 @@ https://www.heroku.com/
 Clone repository and navigate to api folder.
 For developing the app you can use Visual Studio.
 Use npm install before starting developing changes to make sure the dependencies installed and are up to date.
+
+### Endpoints
+The swagger API documentation is available here:
+https://lukaszuczkiewicz.github.io/swagger-docs/

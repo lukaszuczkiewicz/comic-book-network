@@ -110,7 +110,7 @@
                 >
               </li>
               <li>
-                <a class="menu__item navbar-item" @click="logout()">Logout</a>
+                <a class="menu__item navbar-item" @click="logout()" data-test="logout">Logout</a>
               </li>
             </ul>
           </teleport>

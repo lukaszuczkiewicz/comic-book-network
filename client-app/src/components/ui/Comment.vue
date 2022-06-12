@@ -14,7 +14,7 @@
             <h4 class="title is-4">{{ comicTitle }} #{{ issueNumber }}</h4>
           </div>
         </div>
-        <p class="text-content">{{ description }}</p>
+        <p class="text-content" data-test="comment-description">{{ description }}</p>
       </div>
       <img
         v-if="coverTitle"

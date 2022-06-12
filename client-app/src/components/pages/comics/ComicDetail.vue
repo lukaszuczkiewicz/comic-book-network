@@ -1,7 +1,7 @@
 <template>
   <div class="main-container" v-if="!isLoading">
     <div class="info-header">
-      <router-link :to="'/comics/' + comic.comicSeriesId">{{
+      <router-link :to="'/comics/' + comic.comicSeriesId" data-test="comic-series">{{
         comic.seriesName
       }}</router-link>
       <p>
@@ -16,44 +16,53 @@
     <div class="action-container">
       <div class="rating">
         <div class="flex">
-            <star-filled
-              v-if="rating >= 1"
-              class="star"
-              @click="rate(1)"
-            ></star-filled>
-            <star-outlined v-else class="star" @click="rate(1)"></star-outlined>
+          <star-filled
+            v-if="rating >= 1"
+            class="star"
+            @click="rate(1)"
+          ></star-filled>
+          <star-outlined v-else class="star" @click="rate(1)"></star-outlined>
 
-            <star-filled
-              v-if="rating >= 2"
-              class="star"
-              @click="rate(2)"
-            ></star-filled>
-            <star-outlined v-else class="star" @click="rate(2)"></star-outlined>
+          <star-filled
+            v-if="rating >= 2"
+            class="star"
+            @click="rate(2)"
+          ></star-filled>
+          <star-outlined v-else class="star" @click="rate(2)"></star-outlined>
 
-            <star-filled
-              v-if="rating >= 3"
-              class="star"
-              @click="rate(3)"
-            ></star-filled>
-            <star-outlined v-else class="star" @click="rate(3)"></star-outlined>
+          <star-filled
+            v-if="rating >= 3"
+            class="star"
+            @click="rate(3)"
+          ></star-filled>
+          <star-outlined v-else class="star" @click="rate(3)"></star-outlined>
 
-            <star-filled
-              v-if="rating >= 4"
-              class="star"
-              @click="rate(4)"
-            ></star-filled>
-            <star-outlined v-else class="star" @click="rate(4)"></star-outlined>
+          <star-filled
+            v-if="rating >= 4"
+            class="star"
+            @click="rate(4)"
+          ></star-filled>
+          <star-outlined v-else class="star" @click="rate(4)"></star-outlined>
 
-            <star-filled
-              v-if="rating == 5"
-              class="star"
-              @click="rate(5)"
-            ></star-filled>
-            <star-outlined v-else class="star" @click="rate(5)"></star-outlined>
+          <star-filled
+            v-if="rating == 5"
+            class="star"
+            @click="rate(5)"
+          ></star-filled>
+          <star-outlined v-else class="star" @click="rate(5)"></star-outlined>
 
-            <remove-icon @click="rate(0)" class="remove"></remove-icon>
+          <remove-icon
+            @click="rate(0)"
+            class="remove"
+            data-test="remove-score"
+          ></remove-icon>
         </div>
-        <div>Average User Score: <span>{{ averageRating? averageRating : "N/A" }}</span></div>
+        <div>
+          Average User Score:
+          <span data-test="average-score">{{
+            averageRating ? averageRating : "N/A"
+          }}</span>
+        </div>
       </div>
       <div class="btns-container">
         <div class="buttons">
@@ -84,15 +93,30 @@
 
     <div class="main-content">
       <div>
-        <p class="description">{{ comic.description }}</p>
-        <p><span class="bold">Cover Price: </span>${{ comic.price }}</p>
-        <p><span class="bold">Page Count: </span>32</p>
-        <p><span class="bold">Writer: </span>{{ comic.writer }}</p>
-        <p><span class="bold">Artist: </span>{{ comic.artist }}</p>
+        <p class="description" data-test="comic-description">{{ comic.description }}</p>
+        <p>
+          <span class="bold">Cover Price: </span>
+          <span data-test="cover-price">${{ comic.price }}</span>
+        </p>
+        <p>
+          <span class="bold">Page Count: </span>
+          <span data-test="page-count">32<span>
+        </p>
+        <p>
+          <span class="bold">Writer: </span>
+          <span data-test="writer">{{ comic.writer }}</span>
+        </p>
+        <p>
+          <span class="bold">Artist: </span>
+          <span data-test="artist">{{ comic.artist }}</span>
+        </p>
       </div>
       <img
         class="comic-img"
-        :src="`https://res.cloudinary.com/dwvenbraf/image/upload/v1644712521/` + comic.photo"
+        :src="
+          `https://res.cloudinary.com/dwvenbraf/image/upload/v1644712521/` +
+          comic.photo
+        "
         alt="comic cover"
       />
     </div>
@@ -103,17 +127,17 @@
 </template>
 
 <script>
-import StarOutlined from '../../../assets/icons/StarOutlined.vue';
-import StarFilled from '../../../assets/icons/StarFilled.vue';
-import RemoveIcon from '../../../assets/icons/RemoveIcon.vue';
-import ComicComments from '../comics/ComicComments.vue';
+import StarOutlined from "../../../assets/icons/StarOutlined.vue";
+import StarFilled from "../../../assets/icons/StarFilled.vue";
+import RemoveIcon from "../../../assets/icons/RemoveIcon.vue";
+import ComicComments from "../comics/ComicComments.vue";
 
 export default {
   components: {
     StarOutlined,
     StarFilled,
     ComicComments,
-    RemoveIcon
+    RemoveIcon,
   },
   data() {
     return {
@@ -139,14 +163,14 @@ export default {
           `${process.env.VUE_APP_ROOT_API}/comic/${this.$route.params.id2}`,
           {
             headers: {
-              Authorization: 'Bearer ' + localStorage.getItem('token'),
+              Authorization: "Bearer " + localStorage.getItem("token"),
             },
           }
         );
         const responseData = await response.json();
 
         if (!response.ok) {
-          const error = new Error(responseData.message || 'Failed to fetch!');
+          const error = new Error(responseData.message || "Failed to fetch!");
           throw error;
         }
 
@@ -165,7 +189,7 @@ export default {
           artist: responseData.artist,
         };
       } catch (error) {
-        this.error = error.message || 'Something went wrong!';
+        this.error = error.message || "Something went wrong!";
       }
       this.isLoading = false;
     },
@@ -175,14 +199,14 @@ export default {
           `${process.env.VUE_APP_ROOT_API}/comic/social/${this.$route.params.id2}`,
           {
             headers: {
-              Authorization: 'Bearer ' + localStorage.getItem('token'),
+              Authorization: "Bearer " + localStorage.getItem("token"),
             },
           }
         );
         const responseData = await response.json();
 
         if (!response.ok) {
-          const error = new Error(responseData.message || 'Failed to fetch!');
+          const error = new Error(responseData.message || "Failed to fetch!");
           throw error;
         }
 
@@ -191,39 +215,40 @@ export default {
         this.isInCollection = responseData.isInCollection;
         this.isInWishlist = responseData.isInWishlist;
         this.averageRating = responseData.averageRating;
-
       } catch (error) {
-        this.error = error.message || 'Something went wrong!';
+        this.error = error.message || "Something went wrong!";
       }
     },
     async rate(rateNumber) {
       if (rateNumber < 0 || rateNumber > 5) return;
 
       try {
-        const response = await fetch(`${process.env.VUE_APP_ROOT_API}/comic/rate`, {
-          method: 'POST',
-          headers: {
-            Authorization: 'Bearer ' + localStorage.getItem('token'),
-            'content-type': 'application/json',
-          },
-          body: JSON.stringify({
-            rate: rateNumber,
-            comicId: this.comic.id,
-          }),
-        });
+        const response = await fetch(
+          `${process.env.VUE_APP_ROOT_API}/comic/rate`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+              "content-type": "application/json",
+            },
+            body: JSON.stringify({
+              rate: rateNumber,
+              comicId: this.comic.id,
+            }),
+          }
+        );
 
         if (!response.ok) {
-          const error = new Error(response.message || 'Failed to rate comic!');
-          this.$toast.error('Comic was not rated!');
+          const error = new Error(response.message || "Failed to rate comic!");
+          this.$toast.error("Comic was not rated!");
           throw error;
         }
 
         this.rating = rateNumber;
         if (rateNumber >= 1) this.isRead = true;
         this.loadComicSocial();
-
       } catch (error) {
-        this.error = error.message || 'Not rated!';
+        this.error = error.message || "Not rated!";
       }
     },
     async addToList(listName) {
@@ -231,10 +256,10 @@ export default {
         const response = await fetch(
           `${process.env.VUE_APP_ROOT_API}/comic/add-to-${listName}`,
           {
-            method: 'POST',
+            method: "POST",
             headers: {
-              Authorization: 'Bearer ' + localStorage.getItem('token'),
-              'content-type': 'application/json',
+              Authorization: "Bearer " + localStorage.getItem("token"),
+              "content-type": "application/json",
             },
             body: JSON.stringify({
               comicId: this.comic.id,
@@ -243,14 +268,14 @@ export default {
         );
 
         if (!response.ok) {
-          const error = new Error(response.message || 'Failed to send!');
+          const error = new Error(response.message || "Failed to send!");
           this.$toast.error(`Comic was not added to ${listName}!`);
           throw error;
         }
 
         this.loadComicSocial();
       } catch (error) {
-        this.error = error.message || 'Not rated!';
+        this.error = error.message || "Not rated!";
       }
     },
   },
@@ -352,8 +377,7 @@ export default {
     align-items: center;
   }
   .rating {
-    margin-top : 1em;
+    margin-top: 1em;
   }
 }
-
 </style>

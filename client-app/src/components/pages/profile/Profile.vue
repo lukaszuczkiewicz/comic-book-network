@@ -6,21 +6,20 @@
 
         <div class="field">
           <label class="label">Username</label>
-          <p>{{userName}}</p>
-  
+          <p data-test="username">{{userName}}</p>
         </div>
 
         <div class="field">
           <label class="label">Country</label>
           <div class="control">
-            <input class="input" type="text" v-model="country" />
+            <input class="input" type="text" v-model="country" data-test="country"/>
           </div>
         </div>
 
         <div class="field">
           <label class="label">About me</label>
           <div class="control">
-            <textarea class="textarea" v-model="introduction"></textarea>
+            <textarea class="textarea" v-model="introduction" data-test="about-me"></textarea>
           </div>
         </div>
       

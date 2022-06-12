@@ -7,40 +7,53 @@
         </figure>
       </div>
       <div class="card-content">
-
         <div class="tabs is-toggle is-boxed is-fullwidth">
           <ul>
-            <li @click="goToLoginTab" :class="isLoginMode ? 'is-active' : ''"><a>Log in</a></li>
-            <li @click="goToRegisterTab" :class="!isLoginMode ? 'is-active' : ''"><a>Register</a></li>
+            <li
+              @click="goToLoginTab"
+              :class="isLoginMode ? 'is-active' : ''"
+              data-test="login-tab"
+            >
+              <a>Log in</a>
+            </li>
+            <li
+              @click="goToRegisterTab"
+              :class="!isLoginMode ? 'is-active' : ''"
+              data-test="register-tab"
+            >
+              <a>Register</a>
+            </li>
           </ul>
         </div>
 
         <div class="content">
           <transition name="route" mode="out-in">
-            <login v-if="isLoginMode" :isNavigatedFromRegistration="wasRegistrationSuccessful"></login>
+            <login
+              v-if="isLoginMode"
+              :isNavigatedFromRegistration="wasRegistrationSuccessful"
+            ></login>
             <register v-else @registered="registered"></register>
           </transition>
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
 <script>
-import Login from './Login.vue';
-import Register from './Register.vue';
+import Login from "./Login.vue";
+import Register from "./Register.vue";
 
 export default {
   components: {
     Login,
-    Register
+    Register,
   },
   data() {
     return {
       isLoginMode: true,
-      wasRegistrationSuccessful: false
-    }
+      wasRegistrationSuccessful: false,
+    };
   },
   methods: {
     registered() {
@@ -48,13 +61,13 @@ export default {
       this.wasRegistrationSuccessful = true;
     },
     goToRegisterTab() {
-      this.isLoginMode=false
+      this.isLoginMode = false;
       this.wasRegistrationSuccessful = false;
     },
     goToLoginTab() {
-      this.isLoginMode=true
-    }
-  }
+      this.isLoginMode = true;
+    },
+  },
 };
 </script>
 
@@ -69,7 +82,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url('https://res.cloudinary.com/dwvenbraf/image/upload/v1644717345/authBackground_uzaurj.jpg');
+  background-image: url("https://res.cloudinary.com/dwvenbraf/image/upload/v1644717345/authBackground_uzaurj.jpg");
 }
 .auth-card {
   width: 500px;

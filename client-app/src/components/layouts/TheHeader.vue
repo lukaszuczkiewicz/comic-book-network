@@ -110,7 +110,12 @@
                 >
               </li>
               <li>
-                <a class="menu__item navbar-item" @click="logout()" data-test="logout">Logout</a>
+                <a
+                  class="menu__item navbar-item"
+                  @click="logout()"
+                  data-test="logout"
+                  >Logout</a
+                >
               </li>
             </ul>
           </teleport>
@@ -125,13 +130,13 @@ export default {
   data() {
     return {
       isMenuOpen: false,
-      username: localStorage.getItem('username'),
+      username: localStorage.getItem("username"),
       isHamburgerOn: false,
     };
   },
   methods: {
     logout() {
-      this.$router.replace('/auth');
+      this.$router.replace("/auth");
     },
     closeMenu() {
       this.isHamburgerOn = false;
@@ -245,11 +250,11 @@ export default {
   transition-duration: 0.25s;
 }
 .menu__btn > span::before {
-  content: '';
+  content: "";
   top: -8px;
 }
 .menu__btn > span::after {
-  content: '';
+  content: "";
   top: 8px;
 }
 .menu__box {
@@ -259,7 +264,7 @@ export default {
   display: block;
   padding: 12px 24px;
   color: #333;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 20px;
   font-weight: 600;
   text-decoration: none;
@@ -304,7 +309,7 @@ export default {
     z-index: 100;
   }
   .menu__box-closed {
-  transform: translateX(-100%);
+    transform: translateX(-100%);
   }
   .menu__box-open {
     transition: translateX(100vw);

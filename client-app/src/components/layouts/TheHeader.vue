@@ -48,7 +48,7 @@
               >Help</a
             >
             <hr class="navbar-divider" />
-            <a class="navbar-item" @click="logout">Logout </a>
+            <a class="navbar-item" @click="logout" data-test="logout">Logout</a>
           </div>
         </div>
 

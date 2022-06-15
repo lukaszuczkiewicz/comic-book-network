@@ -1,6 +1,6 @@
 <template>
   <div class="comic-card">
-    <router-link :to="'/comics/1/' + comicId" class="link">
+    <router-link :to="'/comics/1/' + comicId" class="link" :data-test="cardTitle">
       <img
         class="comic-img"
         :src="`https://res.cloudinary.com/dwvenbraf/image/upload/v1644712521/${coverTitle}`"
@@ -34,7 +34,7 @@
     </div>
     <div class="text-container">
       <p class="publisher">{{ publisher }}</p>
-      <h6 class="title is-6">{{ title + ' #' + issueNumber }}</h6>
+      <h6 class="title is-6">{{ cardTitle }}</h6>
     </div>
   </div>
 </template>
@@ -84,6 +84,11 @@ export default {
       isInCollectionData: this.isInCollection,
       isReadData: this.isRead,
       isInWishlistData: this.isInWishlist
+    }
+  },
+  computed: {
+    cardTitle() {
+      return this.title + ' #' + this.issueNumber;
     }
   },
   methods: {

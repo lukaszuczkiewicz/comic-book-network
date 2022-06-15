@@ -5,9 +5,9 @@
       <h2 class="title is-1">{{ series.seriesName }}</h2>
       <div class="header-box">
 
-      <p>Publisher: <span class="bold">{{ series.publisher }}</span></p>
-      <p>Published From: <span class="bold">{{ series.startYear }}</span></p>
-      <p>Published To: <span class="bold">{{ series.endYear? series.endYear : "ongoing" }}</span></p>
+      <p>Publisher: <span class="bold" data-test="publisher">{{ series.publisher }}</span></p>
+      <p>Published From: <span class="bold" data-test="published-from">{{ series.startYear }}</span></p>
+      <p>Published To: <span class="bold" data-test="published-to">{{ series.endYear? series.endYear : "ongoing" }}</span></p>
       </div>
     </div>
     <comic-grid title="Comics" :listType="'from-series/' + this.$route.params.id"></comic-grid>

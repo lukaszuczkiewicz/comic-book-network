@@ -1,6 +1,6 @@
 <template>
   <header>
-    <nav class="header-nav">
+    <nav class="header-nav" data-test="desktop-menu">
       <div class="nav-options">
         <router-link to="/" class="logo-link">
           <img
@@ -65,6 +65,7 @@
 
           <teleport to="#app">
             <ul
+              data-test="mobile-menu"
               class="menu__box"
               :class="isHamburgerOn ? 'menu__box-open' : 'menu__box-closed'"
             >

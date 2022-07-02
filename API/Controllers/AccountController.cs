@@ -48,7 +48,8 @@ namespace API.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login([FromBody] DTOs.LoginDto loginDto)
         {
-            var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName.ToLower() == loginDto.Username.ToLower());
+            var user = await _context.Users.SingleOrDefaultAsync(
+                x => x.UserName.ToLower() == loginDto.Username.ToLower());
 
             if (user == null) return Unauthorized("Invalid username");
 
@@ -58,7 +59,8 @@ namespace API.Controllers
 
             for (int i = 0; i < computedHash.Length; i++)
             {
-                if (computedHash[i] != user.PasswordHash[i]) return Unauthorized("Invalid password");
+                if (computedHash[i] != user.PasswordHash[i])
+                    return Unauthorized("Invalid password");
             }
 
             return new UserDto
@@ -70,7 +72,8 @@ namespace API.Controllers
 
         private async Task<bool> UserExists(string username)
         {
-            return await _context.Users.AnyAsync(user => user.UserName.ToLower() == username.ToLower());
+            return await _context.Users.AnyAsync(
+                user=> user.UserName.ToLower() == username.ToLower());
         }
     }
 }

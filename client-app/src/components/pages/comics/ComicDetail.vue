@@ -100,7 +100,7 @@
         </p>
         <p>
           <span class="bold">Page Count: </span>
-          <span data-test="page-count">32</span>
+          <span data-test="page-count">{{ comic.pageCount }}</span>
         </p>
         <p>
           <span class="bold">Writer: </span>
